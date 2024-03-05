@@ -28,9 +28,7 @@ public class RaycastInteraction : MonoBehaviour
             // Burada çarpýþan nesneyle ilgili iþlemleri yapabilirsiniz
             GameObject hitObject = hitInfo.collider.gameObject;
             
-                // Etkileþim iþlemleri
-               
-            Debug.Log("Etkilesime girilebilir. \"Carpilan nesne:\" =>" + hitObject.name);
+            // Etkileþim iþlemleri
             hitObject.GetComponent<Interactable>().Interact();
         }
     }

@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("MenuTools")]
+    [SerializeField] GameObject MenuPanel;
+    [SerializeField] Button StartGameButton;
+
     [Header("LockedInteract")]
     [SerializeField] GameObject LockedInteractPanel;
     [Header("DoorInteract")]
@@ -20,6 +25,18 @@ public class UIManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        StartGameButton.onClick.AddListener(StartTheGame);
+    }
+    public void StartTheGame()
+    {
+        GameManager.instance.StartGame();
+    }
+    public void SetActivationMenuPanel(bool _active)
+    {
+        MenuPanel.SetActive(_active);
     }
     public void LockedInteractPanelActivation(bool _active)
     {

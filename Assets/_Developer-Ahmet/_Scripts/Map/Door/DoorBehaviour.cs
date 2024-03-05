@@ -7,6 +7,8 @@ public class DoorBehavior : MonoBehaviour
 {
     [SerializeField] DoorType _doorType = DoorType.Single;
     [SerializeField] Direction _doorDirection = Direction.North;
+    [SerializeField] bool _isClassroomDoor = false;
+    [SerializeField] bool _isMouseRoomDoor = false;
     public bool _isOpen = false;
     private bool _isBusy = false;
     Coroutine _coroutine;
@@ -67,6 +69,10 @@ public class DoorBehavior : MonoBehaviour
     }
     IEnumerator OpenDoor()
     {
+        if (_isMouseRoomDoor)
+        {
+            GetComponentInParent<SchoolClassManager>().MousesActive(true);
+        }
         _isBusy = true;
         if (_otherDoor != null)
         {
@@ -114,6 +120,11 @@ public class DoorBehavior : MonoBehaviour
             _otherDoor._isOpen = true;
             _otherDoor._isBusy = false;
         }
+        if (_isClassroomDoor)
+        {
+            GetComponentInParent<SchoolClassManager>().AllLookPlayer();
+        }
+        
     }
     IEnumerator CloseDoor()
     {
@@ -149,6 +160,14 @@ public class DoorBehavior : MonoBehaviour
         {
             _otherDoor._isOpen = false;
             _otherDoor._isBusy = false;
+        }
+        if (_isClassroomDoor)
+        {
+            GetComponentInParent<SchoolClassManager>().AllNotLookPlayer();
+        }
+        if (_isMouseRoomDoor)
+        {
+            GetComponentInParent<SchoolClassManager>().MousesActive(false);
         }
     }
 }

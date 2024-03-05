@@ -24,6 +24,9 @@ public class PlayerManager : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<FirstPersonController>();
         assetsInputs = player.GetComponent<StarterAssetsInputs>();
         SavePlayerBaseOptions();
+        UIManager.instance.SetActivationMenuPanel(true);
+        PlayerLock();
+        GameManager.instance.SetCursorLockMode(CursorLockMode.Confined);
     }
     private void SavePlayerBaseOptions()
     {

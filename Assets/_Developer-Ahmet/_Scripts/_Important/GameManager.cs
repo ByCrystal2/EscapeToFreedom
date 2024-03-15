@@ -18,14 +18,23 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        Init();
+    }
+    private void Init()
+    {
+        AudioManager.instance.SourcesInit();
+        PuzzleManager.instance.PuzzlesInit();
         List<SchoolFloorManager> list = FindObjectsOfType<SchoolFloorManager>().ToList();
         int length = list.Count;
         for (int i = 0; i < length; i++)
         {
             _FloorManagers.Add(list[i]);
         }
-        _currentSchoolFloor = SchoolFloor.FirstFloor;       
-    }
+        _currentSchoolFloor = SchoolFloor.FirstFloor;
+    } 
     public void SetCursorLockMode(CursorLockMode _lockMode)
     {
         Cursor.lockState = _lockMode;
@@ -36,6 +45,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartGame()
     {
+        UIManager.instance.SetActivationMainMissionPanel(true);
         PlayerManager.instance.PlayerUnlock();
         UIManager.instance.SetActivationMenuPanel(false);
         SetCursorLockMode(CursorLockMode.Locked);

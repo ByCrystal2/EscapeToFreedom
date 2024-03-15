@@ -55,6 +55,7 @@ namespace StarterAssets
 		private float _cinemachineTargetPitch;
 
 		// player
+		public bool IsBusy { get; set; }
 		private float _speed;
 		private float _rotationVelocity;
 		private float _verticalVelocity;
@@ -147,6 +148,10 @@ namespace StarterAssets
 				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
 
 				// rotate the player left and right
+				if (!PuzzleManager.instance.MissionComplateController.GetIsRotateComplate())
+				{
+					PuzzleManager.instance.MissionComplateController.RotateMissionComplate();
+                }
 				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
 		}

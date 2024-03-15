@@ -184,6 +184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b0691197157a3b41993baf67fcc12b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainCamera: {fileID: 0}
+  _interactableLayers:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &6935925140446790842
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +199,7 @@ GameObject:
   - component: {fileID: 1757688805019151292}
   - component: {fileID: 4227299530876181757}
   - component: {fileID: 995721937475017950}
+  - component: {fileID: 4634261160356084484}
   - component: {fileID: 8328531484137235193}
   - component: {fileID: 2695108216022482746}
   - component: {fileID: 8330487658962853123}
@@ -278,6 +283,18 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 333458499980913020}
   TopClamp: 89
   BottomClamp: -89
+--- !u!114 &4634261160356084484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6935925140446790842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ced277713bd9e4ab3177a101137941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8328531484137235193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +546,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 729aad4491e915a41bda2b8325cf757a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_FocusTracksTarget: 0
+  m_FocusTracking: 0
+  m_FocusTarget: {fileID: 0}
+  m_FocusOffset: 0
+  m_Profile: {fileID: 0}
 --- !u!1001 &8133698383425397962
 PrefabInstance:
   m_ObjectHideFlags: 0

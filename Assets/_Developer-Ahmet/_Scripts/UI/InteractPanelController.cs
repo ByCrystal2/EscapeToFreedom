@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class InteractPanelController : MonoBehaviour
 {
-    public static InteractPanelController instance { get; private set; }
-    [SerializeField] TextMeshProUGUI TxtDoorInteract;
+    [SerializeField] TextMeshProUGUI TxtInteract;
     private InteractableType _currentInteractableObject;
+    public static InteractPanelController instance { get; private set; }
     private void Awake()
     {
         if (instance)
@@ -33,11 +33,11 @@ public class InteractPanelController : MonoBehaviour
         _currentDoor = _door;
         if (_currentDoor._isOpen)
         {
-            TxtDoorInteract.text = "Close Door";
+            TxtInteract.text = "Close Door";
         }
         else
         {
-            TxtDoorInteract.text = "Open Door";
+            TxtInteract.text = "Open Door";
         }
     }
     public void SetCurrentInteractionLocker(LockerBehaviour _locker)
@@ -46,19 +46,20 @@ public class InteractPanelController : MonoBehaviour
         _currentLocker = _locker;
         if (_currentLocker._isSerched)
         {
-            TxtDoorInteract.text = "Searched!";
+            TxtInteract.text = "Searched!";
+            if (_currentLocker._isEmpty)
+            {
+                TxtInteract.text += " (Empty)";
+            }
         }
         else
         {
-            if (_currentLocker._isEmpty)            
-            TxtDoorInteract.text = "Search... (Empty)";
-            if (_currentLocker._isEmpty)
-                TxtDoorInteract.text = "Search...";
+            TxtInteract.text = "Search...";
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !PlayerManager.instance.player.IsBusy)
         {
             if (_currentInteractableObject == InteractableType.Door)
             {

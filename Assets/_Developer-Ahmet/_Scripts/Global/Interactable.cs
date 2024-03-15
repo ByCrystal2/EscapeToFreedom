@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour, IInteractable
     [SerializeField] InteractableType _interactableType;
     public bool IsLocked = true;
     public void Interact()
-    {
+    {        
         if (_interactableType == InteractableType.Door)
         {
             //DoorBehavior _myDoor = GetComponent<DoorBehavior>();
@@ -38,6 +38,7 @@ public class Interactable : MonoBehaviour, IInteractable
                 }
                 else
                 {
+                    
                     UIManager.instance.LockedInteractPanelActivation(true);
                 }
             }            

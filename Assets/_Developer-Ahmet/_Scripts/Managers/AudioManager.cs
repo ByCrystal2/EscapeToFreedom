@@ -17,6 +17,10 @@ public class AudioManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        
+    }
+    public void SourcesInit()
+    {
         StartMenuSource();
     }
     public void StartMenuSource()

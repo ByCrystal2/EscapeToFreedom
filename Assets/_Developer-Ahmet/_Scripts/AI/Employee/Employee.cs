@@ -72,12 +72,12 @@ public interface IRunable
 }
 public abstract class TaskAbstract
 {
-    List<Task> MyTasks = new List<Task>();
-    public void AddTask(Task _task)
+    List<Mission> MyTasks = new List<Mission>();
+    public void AddTask(Mission _task)
     {
         MyTasks.Add(_task);
     }
-    public void RemoveTask(Task _task)
+    public void RemoveTask(Mission _task)
     {
         MyTasks.Remove(_task);
     }
@@ -85,16 +85,16 @@ public abstract class TaskAbstract
     {
         return MyTasks.Count > 0;
     }
-    public bool IsHasThisTask(Task _task)
+    public bool IsHasThisTask(Mission _task)
     {
         return MyTasks.Contains(_task);
     }
 }
-public class Task
+public class Mission
 {
     TaskType _taskType;
     Vector3 _targetPos;
-    public Task(TaskType taskType, Vector3 _targetPosition)
+    public Mission(TaskType taskType, Vector3 _targetPosition)
     {
         _taskType = taskType;
         _targetPos = _targetPosition;

@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance { get; private set; }
     public FirstPersonController player;
     public StarterAssetsInputs assetsInputs;
+    public PlayerInventory playerInventory;
     private float _baseMoveSpeed; 
     private float _baseSprintSpeed; 
     private float _baseJumpHeight; 
@@ -23,6 +24,7 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         player = GameObject.FindWithTag("Player").GetComponent<FirstPersonController>();
         assetsInputs = player.GetComponent<StarterAssetsInputs>();
+        playerInventory = player.GetComponent<PlayerInventory>();
         SavePlayerBaseOptions();
         UIManager.instance.SetActivationMenuPanel(true);
         PlayerLock();
@@ -37,6 +39,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PlayerLock()
     {
+        player.IsBusy = true;
         player.MoveSpeed = 0;
         player.SprintSpeed = 0;
         player.JumpHeight = 0;
@@ -44,6 +47,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PlayerUnlock()
     {
+        player.IsBusy = false;
         player.MoveSpeed = _baseMoveSpeed;
         player.SprintSpeed = _baseSprintSpeed;
         player.JumpHeight = _baseJumpHeight;

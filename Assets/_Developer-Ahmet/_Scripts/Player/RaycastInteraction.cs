@@ -9,6 +9,7 @@ public class RaycastInteraction : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         // Raycast'i oluþtur
         Ray ray = new Ray(_mainCamera.transform.position, _mainCamera.transform.forward);
 
@@ -22,6 +23,7 @@ public class RaycastInteraction : MonoBehaviour
         {
             UIManager.instance.LockedInteractPanelActivation(false);
         }
+        if (PlayerManager.instance.player.IsBusy) return;
         if (Physics.Raycast(ray, out hitInfo, maxDistance, _interactableLayers))
         {
             // Iþýn belirli bir nesneye çarptý

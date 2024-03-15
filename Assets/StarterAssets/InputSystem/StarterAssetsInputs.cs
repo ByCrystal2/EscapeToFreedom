@@ -20,8 +20,37 @@ namespace StarterAssets
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+		bool _isInventoryActive = false;
+		
+        private void Update()
+        {
+			if (Input.GetKeyDown(KeyCode.I) && !PlayerManager.instance.playerInventory._isBusy)
+			{
+				_isInventoryActive = !_isInventoryActive;
+				if (_isInventoryActive)
+				{
+					if (!PuzzleManager.instance.MissionComplateController.GetIsInventoryComplate())
+					{
+						PuzzleManager.instance.MissionComplateController.InventoryMissionComplate();
+
+                    }
+					ItemManager.instance.CurrentActiveInventoryPanel = ActiveInventoryPanel.PlayerInventory;
+					PlayerManager.instance.PlayerLock();
+					SetCursorState(false);
+					cursorLocked = false;
+                }
+				else
+				{
+                    ItemManager.instance.CurrentActiveInventoryPanel = ActiveInventoryPanel.None;
+                    PlayerManager.instance.PlayerUnlock();
+                    SetCursorState(true);
+                    cursorLocked = true;
+                }
+                UIManager.instance.SetActivationInventoryPanel(_isInventoryActive);
+            }
+        }		
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}

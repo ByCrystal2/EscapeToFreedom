@@ -6,7 +6,7 @@ public class RaycastInteraction : MonoBehaviour
 {
     [SerializeField] Camera _mainCamera;
     [SerializeField] LayerMask _interactableLayers;
-
+    [SerializeField] LayerMask _collectableLayers;
     void FixedUpdate()
     {
         
@@ -23,15 +23,33 @@ public class RaycastInteraction : MonoBehaviour
         {
             UIManager.instance.LockedInteractPanelActivation(false);
         }
+        if (UIManager.instance.GetCollectPanelActive())
+        {
+            UIManager.instance.CollectPanelActivation(false);
+        }
         if (PlayerManager.instance.player.IsBusy) return;
         if (Physics.Raycast(ray, out hitInfo, maxDistance, _interactableLayers))
         {
             // Iþýn belirli bir nesneye çarptý
             // Burada çarpýþan nesneyle ilgili iþlemleri yapabilirsiniz
             GameObject hitObject = hitInfo.collider.gameObject;
-            
-            // Etkileþim iþlemleri
+
+            // Etkileþim iþlemleri            
             hitObject.GetComponent<Interactable>().Interact();
+        }
+        if (Physics.Raycast(ray, out hitInfo, maxDistance, _collectableLayers))
+        {
+            Debug.Log("Collectable Object Hit => " + hitInfo.collider.gameObject);
+            // Iþýn belirli bir nesneye çarptý
+            // Burada çarpýþan nesneyle ilgili iþlemleri yapabilirsiniz
+            GameObject hitObject = hitInfo.collider.gameObject;
+            Collectable currentCollectable = hitObject.GetComponent<Collectable>();
+            // Toplama islemleri
+            if (!currentCollectable.GetIsCollected())
+            {
+                UIManager.instance.CollectPanelActivation(true);
+                CollectPanelController.instance.SetCurrentCollectable(currentCollectable);
+            }            
         }
     }
 }

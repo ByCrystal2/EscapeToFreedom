@@ -11,7 +11,7 @@ public class MissionBehaviour : MonoBehaviour
     [SerializeField] Image imgFiller;
     [SerializeField] TextMeshProUGUI txtMessage;
     [SerializeField] GameObject ComplateStrikeObj;
-
+    public MissionType _missionType;
     private GameMission MyMission;
 
     private void Awake()
@@ -28,7 +28,8 @@ public class MissionBehaviour : MonoBehaviour
             }        
         });
     }
-    private void OnEnable()
+    
+    public void SetBaseOptions()
     {
         if (MyMission != null)
         {
@@ -72,5 +73,6 @@ public class MissionBehaviour : MonoBehaviour
     public void SetMyMission(GameMission _mission)
     {
         MyMission = _mission;
+        
     }
 }

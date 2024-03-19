@@ -16,6 +16,8 @@ public class PersonnelBehaviour : MonoBehaviour
     public NavMeshAgent _agent;
     Transform _targetPosition;
     public TargetType _targetType;
+
+    public Puzzle Puzzle;
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -25,11 +27,21 @@ public class PersonnelBehaviour : MonoBehaviour
         {
             _defaultToGoList.Add(_ToGoList[i]);
         }
-        Me = new Personnel(_id, _name, _agent.speed, _type, this);
+        Me = new Personnel(_id, _name, _agent.speed, _type, this);        
     }
     private void Start()
-    {
+    {        
         SetRandomGoTarget();
+        StartCoroutine(WaitForPuzzleManager());
+    }    
+    IEnumerator WaitForPuzzleManager()
+    {
+        yield return new WaitUntil(() => PuzzleManager.instance != null);
+        int random = Random.Range(0, 101);
+        if (random <= 101) // BURASI %20 OLACAK! TEST AMACLÝ %100
+        {
+            Puzzle = PuzzleManager.instance.GetRandomPuzzle();
+        }
     }
     void Update()
     {
@@ -58,6 +70,7 @@ public class PersonnelBehaviour : MonoBehaviour
             }
         }
     }
+    
     public void SetRandomGoTarget()
     {
         Debug.Log("_ToGoList.Count => " + _ToGoList.Count);
@@ -77,7 +90,18 @@ public class PersonnelBehaviour : MonoBehaviour
             return;
         }       
     }
-    
+    public void MyMissionComplate()
+    {        
+        Puzzle = null;
+    }
+    public void KillMe()
+    {
+        Destroy(gameObject);
+    }
+    public Personnel GetMe()
+    {
+        return Me;
+    }
     private Transform GetRandomGoTarget()
     {
         return _ToGoList[Random.Range(0, _ToGoList.Count)];

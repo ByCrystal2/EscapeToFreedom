@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlotObj : MonoBehaviour, IPointerClickHandler
+public class InventorySlotObj : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     private bool _isFull;
     private ItemType type;
@@ -23,6 +23,31 @@ public class InventorySlotObj : MonoBehaviour, IPointerClickHandler
         {
             transform.GetChild(0).GetComponent<SlotItem>().ItemClick(contentType);
         }       
+    }  
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (transform.childCount > 0)
+        {
+            if (transform.GetChild(0).TryGetComponent(out SlotItem _myItem))
+            {
+                if (_myItem == SlotInfoPanelController.instance.CurrentItem)
+                {
+                    SlotInfoPanelController.instance.CurrentItem = null;
+                }
+            }
+        }
+        
     }
-    
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Debug.Log("Slot Item Uzerinde Fare Hareket Ettiriliyor. Slot => " + name);
+        if (GetIsFull())
+        {
+            SlotItem currentItem = transform.GetChild(0).GetComponent<SlotItem>();
+            UIManager.instance.SetActivationSlotItemInfoPanel(true, transform.position, currentItem.GetItemType().ToString(), currentItem.GetMySprite(), currentItem.GetMyData().Name, currentItem.GetMyData().Description);
+            SlotInfoPanelController.instance.CurrentItem = currentItem;
+        }
+    }
 }

@@ -87,6 +87,8 @@ namespace StarterAssets
 			}
 		}
 
+		private float BodyStrength = 100f;
+		private bool isHaveKnife;
 		private void Awake()
 		{
 			// get a reference to our main camera
@@ -122,7 +124,36 @@ namespace StarterAssets
 		{
 			CameraRotation();
 		}
+        public void SetIsHaveAKnife(bool _isHave)
+        {
+            isHaveKnife = _isHave;
+			if (_isHave)
+			{
+				BodyStrength += 50f;
+            }
+			else
+			{
+				BodyStrength -= 50f;
 
+            }
+        }
+       
+        public bool GetIsHaveAKnife()
+        {
+            return isHaveKnife;
+        }
+        public void SetBodyStrength(float _strength)
+		{
+			BodyStrength = _strength;
+		}
+		public void AddBodyStrenth(float _strength)
+		{
+			BodyStrength += _strength;
+		}
+		public float GetBodyStrength()
+		{
+			return BodyStrength;
+		}
 		private void GroundedCheck()
 		{
 			// set sphere position, with offset

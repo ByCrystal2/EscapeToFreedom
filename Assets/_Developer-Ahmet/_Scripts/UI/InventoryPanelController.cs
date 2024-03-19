@@ -48,13 +48,24 @@ public class InventoryPanelController : MonoBehaviour
             }
             return;
         }
+        if (_index == 4)
+        {
+            playerAllItems = ItemManager.instance.GetPlayerInventoryOtherItems();
+            ClearInventoryContent();
+            _inventoryHeaderText.text = playerAllItems.Count > 0 ? "Others" : "Others (Empty)";
+            int length = playerAllItems.Count;
+            for (int i = 0; i < length; i++)
+            {
+                AddItemsInSelectedTabInvetory(playerAllItems[i]);
+            }
+            return;
+        }
         (List<ItemData> currentItems, bool isHaveItem, GameObject currentItemPrefab, string headerText)
             = (_index) switch
         {            
-            1 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Test1), true, ItemManager.instance.Test1ItemPrefab, "Test1s"),
-            2 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Test2), true, ItemManager.instance.Test2ItemPrefab, "Test2s"),
+            1 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Paper), true, ItemManager.instance.PaperItemPrefab, "Notes"),
+            2 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Crowbar), true, ItemManager.instance.CrowbarItemPrefab, "Crowbars"),
             3 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Key), true, ItemManager.instance.KeyItemPrefab, "Keys"),
-            4 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Crowbar), true, ItemManager.instance.CrowbarItemPrefab, "Crowbars"),
             _ => (new List<ItemData>(), false,new GameObject(), "Empty")
         };
         if (isHaveItem)

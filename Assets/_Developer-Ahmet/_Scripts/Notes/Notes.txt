@@ -1,0 +1,5 @@
+﻿Oyun 10. kattan başlayacak.
+Oyuncuya harekete bağlı görevleri yaptırdıktan sonra hikayeyi başlatacağız.
+Tuvalette ki notu bulacak. ("Okulun dışında seni bekliyoruz kaçmak için 1 saatin var-
+Dikkat et Öğretmen ve Personeller tetikte... Anahtarları bulmayı unutma! Mike")
+Main story panelinde 10 adet anahtarı bul görevi.

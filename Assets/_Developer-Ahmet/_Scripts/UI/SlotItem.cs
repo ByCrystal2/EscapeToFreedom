@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using static InventorySlotObj;
 
 public class SlotItem : MonoBehaviour
 {
     ItemType type;
     private ItemData myData;
+    [SerializeField] Sprite mySprte;
     public void SetMyData(ItemData data)
     {
         myData = data;
@@ -18,7 +18,11 @@ public class SlotItem : MonoBehaviour
     }
     public ItemType GetItemType()
     {
-        return type;
+        return myData.ItemType;
+    }
+    public Sprite GetMySprite()
+    {
+        return mySprte;
     }
     public void SetItemType(ItemType type)
     {

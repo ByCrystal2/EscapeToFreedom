@@ -5,10 +5,14 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    [SerializeField] public GameObject Test1ItemPrefab;
-    [SerializeField] public GameObject Test2ItemPrefab;
+    [SerializeField] public GameObject PaperItemPrefab;
+    [SerializeField] public GameObject MushroomItemPrefab;
     [SerializeField] public GameObject KeyItemPrefab;
+    [SerializeField] public GameObject FlowerItemPrefab;
     [SerializeField] public GameObject CrowbarItemPrefab;
+    [SerializeField] public GameObject BookItemPrefab;
+    [SerializeField] public GameObject KnifeItemPrefab;
+    [SerializeField] public GameObject AppleItemPrefab;
 
     public ActiveInventoryPanel CurrentActiveInventoryPanel;
     List<ItemData> _items = new List<ItemData>();
@@ -37,15 +41,15 @@ public class ItemManager : MonoBehaviour
         ItemData i9 = new ItemData(9, "Key9", "9. katta olan item", ItemType.Key);
         ItemData i10 = new ItemData(10, "Key10", "10. katta olan item", ItemType.Key);
 
-        ItemData i11 = new ItemData(11, "Test1_1", "1. katta olan item", ItemType.Test1);
-        ItemData i12 = new ItemData(12, "Test1_2", "2. katta olan item", ItemType.Test1);
-        ItemData i13 = new ItemData(13, "Test1_3", "3. katta olan item", ItemType.Test1);
-        ItemData i14 = new ItemData(14, "Test1_4", "4. katta olan item", ItemType.Test1);
+        ItemData i11 = new ItemData(11, "Friend Paper", "10. katta erkekler tuvaletinde bulunan sýnýf arkadaþýnýn notu #1", ItemType.Paper);
+        ItemData i12 = new ItemData(12, "Test1_2", "2. katta olan item", ItemType.Flower);
+        ItemData i13 = new ItemData(13, "Test1_3", "3. katta olan item", ItemType.Flower);
+        ItemData i14 = new ItemData(14, "Test1_4", "4. katta olan item", ItemType.Flower);
 
-        ItemData i15 = new ItemData(15, "Test2_1", "1. katta olan item", ItemType.Test2);
-        ItemData i16 = new ItemData(16, "Test2_2", "2. katta olan item", ItemType.Test2);
-        ItemData i17 = new ItemData(17, "Test2_3", "3. katta olan item", ItemType.Test2);
-        ItemData i18 = new ItemData(18, "Test2_4", "4. katta olan item", ItemType.Test2);
+        ItemData i15 = new ItemData(15, "Test2_1", "1. katta olan item", ItemType.Mushroom);
+        ItemData i16 = new ItemData(16, "Test2_2", "2. katta olan item", ItemType.Apple);
+        ItemData i17 = new ItemData(17, "Test2_3", "3. katta olan item", ItemType.Book);
+        ItemData i18 = new ItemData(18, "Test2_4", "4. katta olan item", ItemType.Knife);
 
         ItemData i19 = new ItemData(19, "Crowbar", "7. katta olan item", ItemType.Crowbar);
 
@@ -71,19 +75,34 @@ public class ItemManager : MonoBehaviour
         _items.Add(i18);
 
         _items.Add(i19);
+        foreach (var item in _items)
+        {
+            if (item.ItemType == ItemType.Mushroom || item.ItemType == ItemType.Flower || item.ItemType == ItemType.Knife || item.ItemType == ItemType.Apple || item.ItemType == ItemType.Book)
+            {
+                item.IsOther = true;
+            }
+        }
     }
     public GameObject GetPrefabAccordingToItemType(ItemType _type)
     {
         GameObject prefab = (_type) switch
         {
             ItemType.None => new GameObject("None Type"),
-            ItemType.Test1 => Test1ItemPrefab,
-            ItemType.Test2 => Test2ItemPrefab,
+            ItemType.Paper => PaperItemPrefab,
+            ItemType.Mushroom => MushroomItemPrefab,
             ItemType.Key => KeyItemPrefab,
+            ItemType.Flower => FlowerItemPrefab,
             ItemType.Crowbar => CrowbarItemPrefab,
+            ItemType.Book => BookItemPrefab,
+            ItemType.Knife => KnifeItemPrefab,
+            ItemType.Apple => AppleItemPrefab,
             _ => new GameObject("Null Type")
         };
         return prefab;
+    }
+    public ItemData GetItemWithID(int _id)
+    {
+        return GetAllItems().Where(x=> x.ID  == _id).SingleOrDefault();
     }
     public void AddInventoryInPlayerInventory(ItemData itemData)
     {
@@ -120,14 +139,22 @@ public class ItemManager : MonoBehaviour
     {
         return PlayerManager.instance.playerInventory.GetCurrentItems();
     }
+    public List<ItemData> GetPlayerInventoryOtherItems()
+    {
+        return PlayerManager.instance.playerInventory.GetOtherItems();
+    }
 }
 public enum ItemType
 {
     None,
-    Test1,//degistirelecek.
-    Test2,//degistirelecek.
+    Paper,
+    Mushroom,
     Key,
-    Crowbar
+    Flower,
+    Crowbar,
+    Book,
+    Knife,
+    Apple
 }
 public enum ActiveInventoryPanel // su anda aktif olan envanter paneli bilgisini tutmak icin.
 {

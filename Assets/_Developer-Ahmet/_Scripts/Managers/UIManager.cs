@@ -1,11 +1,15 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("GameMain")]
+    [SerializeField] GameObject GameTimePanel;
+    [SerializeField] public TextMeshProUGUI txtGameTime;
     [Header("MenuTools")]
     [SerializeField] GameObject MenuPanel;
     [SerializeField] Button StartGameButton;
@@ -15,12 +19,27 @@ public class UIManager : MonoBehaviour
 
     [Header("LockedInteract")]
     [SerializeField] GameObject LockedInteractPanel;
-    [Header("DoorInteract")]
+    [Header("Interact")]
     [SerializeField] GameObject InteractPanel;    
     [Header("LockerInteract")]
     [SerializeField] GameObject LockerInteractPanel;
+    [Header("Collect")]
+    [SerializeField] GameObject CollectPanel;    
     [Header("MainMissionsPanel")]
     [SerializeField] GameObject MainMissionsPanel;
+    [Header("PuzzleMissionPanel")]
+    [SerializeField] GameObject PuzzleMissionsPanel;
+    [Header("CatchThePlayerPanel")]
+    [SerializeField] GameObject CatchThePlayerPanel;
+    [SerializeField] Button StartPuzzleButton;
+    [SerializeField] Button KillThemButton;
+    [SerializeField] Button EscapteButton;
+    [Header("PaperPanel")]
+    [SerializeField] GameObject PaperPanel;
+    [Header("SlotItemInfoPanel")]
+    [SerializeField] GameObject SlotItemInfoPanel;
+    [Header("SpeakingPanel")]
+    [SerializeField] GameObject SpeakingPanel;
     public static UIManager instance { get; private set; }
     private void Awake()
     {
@@ -35,8 +54,16 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         StartGameButton.onClick.AddListener(StartTheGame);
-        _startPos = MainMissionsPanel.transform.position;
-        _endPos = new Vector3(960, _startPos.y, _startPos.z);
+
+        StartPuzzleButton.onClick.AddListener(StartCathingPuzzleBTN);
+        KillThemButton.onClick.AddListener(KillThePlayerBTN);
+        EscapteButton.onClick.AddListener(EscaoeBTN);
+
+        _missionPanelStartPos = MainMissionsPanel.transform.position;
+        _missionPanelendPos = new Vector3(960, _missionPanelStartPos.y, _missionPanelStartPos.z);
+
+        _puzzlePanelStartPos = PuzzleMissionsPanel.transform.position;
+        _puzzlePanelendPos = new Vector3(-960, _puzzlePanelStartPos.y, _puzzlePanelStartPos.z);
     }
     public void StartTheGame()
     {
@@ -54,6 +81,51 @@ public class UIManager : MonoBehaviour
     {
         MainMissionsPanel.SetActive(_active);
     }
+    public void SetActivationPuzzleMissionPanel(bool _active)
+    {
+        PuzzleMissionsPanel.SetActive(_active);
+    }
+    public void SetActivationCatchThePlayerPanel(bool _active, bool _isHaveAPuzzle = true)
+    {
+        if (_isHaveAPuzzle && PuzzleManager.instance.CurrentPuzzleOwningPersonel == null)
+        {
+            StartPuzzleButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            StartPuzzleButton.gameObject.SetActive(false);
+        }
+        CatchThePlayerPanel.SetActive(_active);
+    }
+    public void SetActivationGameTimePanel(bool _active)
+    {
+        GameTimePanel.SetActive(_active);
+    }
+    public void SetActivationPaperPanel(bool _active, string _header = null, string _message = null)
+    {
+        PlayerManager.instance.PlayerLock();
+        PaperPanel.SetActive(_active);
+        if (!_active) return;
+        PaperPanel.GetComponent<CanvasGroup>().DOFade(1, 1f).OnComplete(() =>
+        {
+            if (_header != null && _message != null)
+            {
+                PaperPanel.GetComponent<PaperPanelController>().StartPaperText(_header, _message);
+            }
+        });        
+    }
+    public void SetActivationSlotItemInfoPanel(bool _active, Vector3 _itemPos, string _itemName = null, Sprite _itemSprite = null, string _itemHeader = null, string _itemDescription = null)
+    {
+        SlotItemInfoPanel.SetActive(_active);
+        if (_active)
+        {
+            SlotInfoPanelController.instance.SetSlotInfoPanelUIs(_itemName,_itemSprite, _itemHeader, _itemDescription, _itemPos);
+        }
+    }
+    public void SetActivationSpeakingPanel(bool  _active)
+    {
+        SpeakingPanel.SetActive(_active);
+    }
     public void LockedInteractPanelActivation(bool _active)
     {
         LockedInteractPanel.SetActive(_active);
@@ -61,6 +133,10 @@ public class UIManager : MonoBehaviour
     public void InteractPanelActivation(bool _active)
     {
         InteractPanel.SetActive(_active);
+    }
+    public void CollectPanelActivation(bool _active)
+    {
+        CollectPanel.SetActive(_active);
     }
     public bool GetLockedInteractPanelActive()
     {
@@ -70,9 +146,25 @@ public class UIManager : MonoBehaviour
     {
         return InteractPanel.activeSelf;
     }
+    public bool GetCollectPanelActive()
+    {
+        return CollectPanel.activeSelf;
+    }
     public bool GetLockerInteractPanelActive()
     {
         return LockerInteractPanel.activeSelf;
+    }
+    public bool GetCatchThePlayerPanelActive()
+    {
+        return CatchThePlayerPanel.activeSelf;
+    }
+    public bool GetSlotItemInfoPanelActive()
+    {
+        return SlotItemInfoPanel.activeSelf;
+    }
+    public bool GetSpeakingPanelActive()
+    {
+        return SpeakingPanel.activeSelf;
     }
     public void LockerInteractPanelActivation(bool _active)
     {
@@ -92,22 +184,75 @@ public class UIManager : MonoBehaviour
             GameManager.instance.SetCursorLockMode(CursorLockMode.Locked);
         }
     }
-    Vector3 _startPos;
-    Vector3 _endPos;
+    Vector3 _missionPanelStartPos;
+    Vector3 _missionPanelendPos;
     public Tween StartDOMoveMissionPanel()
     {
-        if (MainMissionsPanel.transform.position != _endPos)
+        if (MainMissionsPanel.transform.position != _missionPanelendPos)
         {
-            return MainMissionsPanel.transform.DOLocalMoveX(_endPos.x, 2f);
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 2f);
         }
         return null;
     }
     public Tween EndDOMoveMissionPanel()
     {
-        if (MainMissionsPanel.transform.position != _startPos)
+        if (MainMissionsPanel.transform.position != _missionPanelStartPos)
         {
-            return MainMissionsPanel.transform.DOMoveX(_startPos.x, 4f);
+            return MainMissionsPanel.transform.DOMoveX(_missionPanelStartPos.x, 4f);
         }
         return null;
+    }
+    Vector3 _puzzlePanelStartPos;
+    Vector3 _puzzlePanelendPos;
+    public Tween StartDOMovePuzzlePanel()
+    {
+        if (PuzzleMissionsPanel.transform.position != _puzzlePanelendPos)
+        {
+            return PuzzleMissionsPanel.transform.DOLocalMoveX(_puzzlePanelendPos.x, 2f);
+        }
+        return null;
+    }
+    public Tween EndDOMovePuzzlePanel()
+    {
+        if (PuzzleMissionsPanel.transform.position != _puzzlePanelStartPos)
+        {
+            return PuzzleMissionsPanel.transform.DOMoveX(_puzzlePanelStartPos.x, 4f);
+        }
+        return null;
+    }
+    public void StartCathingPuzzleBTN()
+    {        
+        GameManager.instance.CurrentCatchedPersonnelWorkAndMoveOn(true);
+        SetActivationCatchThePlayerPanel(false);
+        PuzzleManager.instance.SetCurrentPuzzle(GameManager.instance.CurrentCathedPlayerPersonel);
+        PuzzleManager.instance.AddMissionsInCurrentPuzzleContent();
+        PlayerManager.instance.PlayerUnlock();
+        GameManager.instance.SetCursorLockMode(CursorLockMode.Locked);
+    }
+
+    public void KillThePlayerBTN()
+    {
+        SetActivationCatchThePlayerPanel(false);
+        bool isCan = PlayerManager.instance.CanPlayerKillThem(GameManager.instance.CurrentCathedPlayerPersonel.GetMe());
+
+        if (isCan)
+        {
+            GameManager.instance.CurrentCathedPlayerPersonel.KillMe();
+        }
+        else
+        {
+            GameManager.instance.GameOver(GameEndType.CatchingStaff);
+        }
+        PlayerManager.instance.PlayerUnlock();
+        GameManager.instance.SetCursorLockMode(CursorLockMode.Locked);        
+    }
+
+    public void EscaoeBTN()
+    {
+        GameManager.instance.CurrentCatchedPersonnelWorkAndMoveOn(true);
+        SetActivationCatchThePlayerPanel(false);
+        GameManager.instance.GameOver(GameEndType.CatchingStaff);
+        PlayerManager.instance.PlayerUnlock();
+        GameManager.instance.SetCursorLockMode(CursorLockMode.Locked);        
     }
 }

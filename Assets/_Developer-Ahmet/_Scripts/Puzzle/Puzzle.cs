@@ -7,11 +7,11 @@ public class Puzzle
 {
     public int ID;
     public string Header;
-    public float TimeInterval;
+    public int TimeInterval;
     public MissionLevel Level;
     public List<GameMission> Missions = new List<GameMission>();
     private bool isComplate;
-    public Puzzle(int _id, string _header, float _timeInterval, List<GameMission> _puzzleMissions, MissionLevel _level)
+    public Puzzle(int _id, string _header, int _timeInterval, List<GameMission> _puzzleMissions, MissionLevel _level)
     {
         ID = _id;
         Header = _header;
@@ -36,6 +36,27 @@ public class Puzzle
     {
         return Missions.Where(x=> x.Level == _level).ToList();
     }
+    public List<GameMission> GetAllMissions()
+    {
+        return Missions;
+    }
+    public bool AllIsMissionsComplated()
+    {
+        int length = Missions.Count;
+        bool allComplate = true;
+        for (int i = 0; i < length; i++)
+        {
+            if (!Missions[i].GetIsComplate())
+            {
+                allComplate = false;
+            }
+        }
+        return allComplate;
+    }
+    public GameMission GetDesiredIDMisson(int _id)
+    {
+        return Missions.Where(x => x.ID == _id).SingleOrDefault();
+    }
     public void MissionComplate(GameMission _mission)
     {
         if (Missions.Contains(_mission))
@@ -45,8 +66,10 @@ public class Puzzle
             else
             {
                 _mission.SetIsComplate(true);
+                PuzzleManager.instance.MissionComplateController.PuzzleAndMissionID(this.ID, _mission.ID);
+                Debug.Log(_mission.Description + " Adli gorev basariyla yapildi.");
                 Missions.Remove(_mission);
             }
-        }
+        }        
     }
 }

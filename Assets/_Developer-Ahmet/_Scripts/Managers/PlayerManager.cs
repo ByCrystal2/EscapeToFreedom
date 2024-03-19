@@ -26,6 +26,7 @@ public class PlayerManager : MonoBehaviour
         assetsInputs = player.GetComponent<StarterAssetsInputs>();
         playerInventory = player.GetComponent<PlayerInventory>();
         SavePlayerBaseOptions();
+        UIManager.instance.SetActivationGameTimePanel(false);
         UIManager.instance.SetActivationMenuPanel(true);
         PlayerLock();
         GameManager.instance.SetCursorLockMode(CursorLockMode.Confined);
@@ -52,5 +53,16 @@ public class PlayerManager : MonoBehaviour
         player.SprintSpeed = _baseSprintSpeed;
         player.JumpHeight = _baseJumpHeight;
         player.RotationSpeed = _baseRotationSpeed;
+    }
+    public bool CanPlayerKillThem(Employee _employee)
+    {
+        if (player.GetBodyStrength() > _employee.BodyStrength)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

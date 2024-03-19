@@ -7,6 +7,7 @@ public class Employee : TaskAbstract
     public int ID;
     public string Name;
     public float Speed;
+    public float BodyStrength;
     public EmployeeType EmployeeType;
     public Employee(int _id, string _name, float _speed, EmployeeType _type)
     {
@@ -15,6 +16,7 @@ public class Employee : TaskAbstract
         Speed = _speed;
         EmployeeType = _type;
     }
+    
 }
 public class Personnel : Employee
 {
@@ -47,8 +49,16 @@ public class Personnel : Employee
         {
             if (behaviour._targetType == TargetType.Player)
             {
-                GameManager.instance.GameOver(GameEndType.CatchingStaff);
-                return;
+                if (!UIManager.instance.GetCatchThePlayerPanelActive())
+                {
+                    Debug.Log("CathThePLayerPanel Aciliyor...");
+                    UIManager.instance.SetActivationCatchThePlayerPanel(true, behaviour.Puzzle != null);
+                    PlayerManager.instance.PlayerLock();
+                    GameManager.instance.SetCursorLockMode(CursorLockMode.Confined);
+                    GameManager.instance.GameOver(GameEndType.CatchingStaff, behaviour);
+                    GameManager.instance.CurrentCatchedPersonnelWorkAndMoveOn(false);
+                    return;
+                }
             }
         }
         if (_distance <= 0.5)
@@ -58,9 +68,9 @@ public class Personnel : Employee
                 behaviour.SetRandomGoTarget();
             }            
         }
+        Debug.Log("_target.position => " + _target.position);
         behaviour._agent.SetDestination(_target.position);
-    }
-
+    }    
 }
 public interface IWalkable
 {

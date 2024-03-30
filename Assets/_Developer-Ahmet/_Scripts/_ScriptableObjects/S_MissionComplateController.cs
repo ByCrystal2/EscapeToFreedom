@@ -7,13 +7,21 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
     private bool IsMoveComplate;
     private bool IsRotateComplate;
     private bool IsInventoryComplate;
+    private bool[] FriendNoteComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] SecurityKeyComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] FloorEnterComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] ClosetSpeakingComplate = { false, false, false, false, false, false, false, false, false, false };
 
     public void ResetComplateBools()
     {
         IsMoveComplate = false;
         IsRotateComplate = false;
         IsInventoryComplate = false;
-    }
+        FriendNoteComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        SecurityKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        FloorEnterComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        ClosetSpeakingComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+}
 
     public void MoveMissionComplate()
     {
@@ -36,7 +44,51 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn)
             PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn = true;
     }
-
+    public void MainStoryMultipleMissionComplate(int _whichNumber, int _missionId, ComplateType _complateType)
+    {
+        if (PlayerManager.instance.player.IsBusy) return;
+        switch (_complateType)
+        {
+            case ComplateType.FriendNoteComplate:
+                if (FriendNoteComplate[_whichNumber])
+                {
+                    Debug.Log("Gorev zaten yapildi.");
+                    return;
+                }
+                FriendNoteComplate[_whichNumber] = true;
+                break;
+            case ComplateType.SecurityKeyComplate:
+                if (SecurityKeyComplate[_whichNumber])
+                {
+                    Debug.Log("Gorev zaten yapildi.");
+                    return;
+                }
+                SecurityKeyComplate[_whichNumber] = true;
+                break;
+            case ComplateType.FloorEnterComplate:
+                if (FloorEnterComplate[_whichNumber])
+                {
+                    Debug.Log("Gorev zaten yapildi.");
+                    return;
+                }
+                FloorEnterComplate[_whichNumber] = true;
+                break;
+            case ComplateType.ClosetSpeakingComplate:
+                if (ClosetSpeakingComplate[_whichNumber])
+                {
+                    Debug.Log("Gorev zaten yapildi.");
+                    return;
+                }
+                ClosetSpeakingComplate[_whichNumber] = true;
+                break;
+            default:
+                break;
+        }
+        
+        if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(_missionId).ComplateToggle.isOn)
+            PuzzleManager.instance.DesiredMainStoryMissionBehaviour(_missionId).ComplateToggle.isOn = true;
+    }    
+    
     public bool GetIsMoveComplate()
     {
         return IsMoveComplate;
@@ -51,6 +103,13 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         return IsInventoryComplate;
     }
 
+}
+public enum ComplateType
+{
+    FriendNoteComplate,
+    SecurityKeyComplate,
+    FloorEnterComplate,
+    ClosetSpeakingComplate
 }
 public partial class S_MissionComplateController : ScriptableObject //Puzzles Missions
 {

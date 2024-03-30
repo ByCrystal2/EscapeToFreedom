@@ -6,7 +6,9 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] AudioSource[] MenuSources;
     [SerializeField] AudioSource[] GameSources;
+    [SerializeField] AudioSource PressSource;
 
+    [SerializeField] AudioClip KeyPressSoound;
     public static AudioManager instance { get; private set; }
     private void Awake()
     {
@@ -68,5 +70,9 @@ public class AudioManager : MonoBehaviour
         int index = Random.Range(0, GameSources.Length);
         GameSources[index].Play();
         GameSources[index].loop = true;
+    }
+    public void PlayOneShotKeyPress()
+    {
+        PressSource.PlayOneShot(KeyPressSoound);
     }
 }

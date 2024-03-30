@@ -8,6 +8,8 @@ public class CollectPanelController : MonoBehaviour
     [SerializeField] TextMeshProUGUI TxtCollect;
     private CollectType _currentCollectableObject;
     private Collectable _currentCollectableBehaviour;
+    private int collectedFrinedNoteCount;
+    private int collectedKeyCount;
     public static CollectPanelController instance { get; private set; }
     private void Awake()
     {
@@ -30,5 +32,21 @@ public class CollectPanelController : MonoBehaviour
         {            
             _currentCollectableBehaviour.Collect();           
         }
-    }    
+    }   
+    public int GetCollectedFrinednoteCount()
+    {
+        return collectedFrinedNoteCount;
+    }
+    public void IncreaseCollectedFirendNoteCount()
+    {
+        collectedFrinedNoteCount++;
+    }
+    public int GetCollectedKeyCount()
+    {
+        return collectedKeyCount;
+    }
+    public void IncreaseCollectedKEyCount()
+    {
+        collectedKeyCount++;
+    }
 }

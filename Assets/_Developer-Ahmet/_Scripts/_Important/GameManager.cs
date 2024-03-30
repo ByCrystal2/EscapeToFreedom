@@ -7,11 +7,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private GameEndType _gameEndType;
-    private SchoolFloor _currentSchoolFloor;
+    [SerializeField] private SchoolFloor _currentSchoolFloor = SchoolFloor.TenthFloor;
     public List<SchoolFloorManager> _FloorManagers = new List<SchoolFloorManager>();
 
     public GameObject CatchedPlayerPersonnelObj;
     public PersonnelBehaviour CurrentCathedPlayerPersonel;
+
+    public SchoolFloorManager currentFloorManager;
     public static GameManager instance { get; private set; }
     private void Awake()
     {
@@ -22,14 +24,16 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
+        Init();
     }
     private void Start()
     {
-        Init();
+        
     }
     private void Init()
     {
         PuzzleManager.instance.PuzzlesInit();
+        TextManager.instance.TextsInit();
         AudioManager.instance.SourcesInit();
         List<SchoolFloorManager> list = FindObjectsOfType<SchoolFloorManager>().ToList();
         int length = list.Count;
@@ -37,7 +41,8 @@ public class GameManager : MonoBehaviour
         {
             _FloorManagers.Add(list[i]);
         }
-        _currentSchoolFloor = SchoolFloor.FirstFloor;
+        _currentSchoolFloor = SchoolFloor.TenthFloor;
+        currentFloorManager = GetDesiredSchoolManager(_currentSchoolFloor);
     } 
     public void SetCursorLockMode(CursorLockMode _lockMode)
     {
@@ -47,14 +52,12 @@ public class GameManager : MonoBehaviour
         else
             PlayerManager.instance.assetsInputs.cursorLocked = false;
     }
-    public void StartGame()
+    public void StartGame() // PlayerAwakePanel TimeLine Signal
     {
-        UIManager.instance.SetActivationMainMissionPanel(true);
-        PlayerManager.instance.PlayerUnlock();
-        UIManager.instance.SetActivationMenuPanel(false);
-        SetCursorLockMode(CursorLockMode.Locked);
-        AudioManager.instance.StartGameSource();
-        TimeManager.instance.StartGameTime();
+        UIManager.instance.SetActivationPlayerAwakePanel(false);
+        UIManager.instance.SetActivationSpeakingPanel(true);        
+        //PlayerManager.instance.PlayerUnlock();        
+        SetCursorLockMode(CursorLockMode.Locked);       
     }
     public void GameOver(GameEndType _endType, PersonnelBehaviour _personnel = null)
     {
@@ -71,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
         else if (_gameEndType == GameEndType.CaughtOnCamera)
         {
-            GetSchoolManager().AllFloorPersonnelsCatchThePlayer();
+            GetDesiredSchoolManager(_currentSchoolFloor).AllFloorPersonnelsCatchThePlayer();
         }
         else if (_gameEndType == GameEndType.PuzzleTimeEnding)
         {
@@ -85,15 +88,19 @@ public class GameManager : MonoBehaviour
     public void OnlyCauthOnCameraGameOver() // [t:Prefab]SecurityCamera/Rotating/Sphere/Sensor/ONDetected Event.
     {
         PlayerManager.instance.PlayerLock();
-        GetSchoolManager().AllFloorPersonnelsCatchThePlayer();
+        GetDesiredSchoolManager(_currentSchoolFloor).AllFloorPersonnelsCatchThePlayer();
     }
-    public SchoolFloorManager GetSchoolManager(SchoolFloor _floor)
+    public SchoolFloorManager GetCurrentSchoolFloorManager()
     {
-        return _FloorManagers[(int)_floor];
+        return currentFloorManager;
     }
-    public SchoolFloorManager GetSchoolManager()
+    public SchoolFloorManager GetDesiredSchoolManager(SchoolFloor _floor)
     {
-        return _FloorManagers[(int)_currentSchoolFloor];
+        return _FloorManagers.Where(x=> x.GetFloor() == _floor).SingleOrDefault();
+    }
+    public SchoolFloor GetCurrentSchoolFlor()
+    {
+        return _currentSchoolFloor;
     }
     public void CurrentCatchedPersonnelWorkAndMoveOn(bool _isMove)
     {        
@@ -112,6 +119,38 @@ public class GameManager : MonoBehaviour
         CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>().enabled = true;
         CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>().SetRandomGoTarget();
 
+    }
+    public void SetCurrentSchoolFloor(bool _increase)
+    {
+        if (_increase)
+        {
+            int nextFloorValue = (int)_currentSchoolFloor + 1;
+
+            if (nextFloorValue <= (int)SchoolFloor.TenthFloor)
+            {
+                _currentSchoolFloor = (SchoolFloor)nextFloorValue;
+            }
+            else
+            {
+                // Eðer en üst kattaysa, en alt kata geri dön.
+                _currentSchoolFloor = SchoolFloor.TenthFloor;
+            }
+        }
+        else
+        {
+            int previousFloorValue = (int)_currentSchoolFloor - 1;
+
+            if (previousFloorValue >= (int)SchoolFloor.FirstFloor)
+            {
+                _currentSchoolFloor = (SchoolFloor)previousFloorValue;
+            }
+            else
+            {
+                // Eðer en alt kattaysa, en üst kata geç.
+                _currentSchoolFloor = SchoolFloor.FirstFloor;
+            }
+        }
+        currentFloorManager = GetDesiredSchoolManager(_currentSchoolFloor);       
     }
 }
 public enum SchoolFloor

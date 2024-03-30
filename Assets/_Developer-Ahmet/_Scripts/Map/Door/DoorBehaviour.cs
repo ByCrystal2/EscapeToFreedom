@@ -15,6 +15,8 @@ public class DoorBehavior : MonoBehaviour
     Quaternion _startRotation;
     Quaternion _endRotation;
     DoorBehavior _otherDoor;
+
+    [SerializeField] public bool isEndGameDoor = false;
     void Start()
     {
         _startRotation = transform.rotation;

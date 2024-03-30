@@ -3,38 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Interactable))]
 public class MainToiletBehaviour : MonoBehaviour
-{
-    [SerializeField] Quaternion _startRotate;
-    [SerializeField] Quaternion _endRotateRotate;
-    [SerializeField] Transform _toiletdeksel;
-    public bool SpeakingEnd;
-    public void DOEndRotate()
+{        
+    [SerializeField] bool _speakingEnd = true;
+
+    private bool isBusy;
+    public void InteractCloset()
     {
-        _toiletdeksel.DORotateQuaternion(_endRotateRotate, 0.4f).OnComplete(() =>
+        if (isBusy)
         {
-            if (!SpeakingEnd)
+            if (UIManager.instance.GetInteractPanelActive())
             {
-                DOStartRotate();
+                UIManager.instance.InteractPanelActivation(false);
             }
-            else
-            {
-                return;
-            }
-        });
+            return;
+        }
+        InteractPanelController.instance.SetCurrentInteractionCloset(this);
     }
-    public void DOStartRotate()
+    public void StartInteract()
     {
-        _toiletdeksel.DORotateQuaternion(_startRotate, 0.2f).OnComplete(() =>
-        {
-            if (!SpeakingEnd)
-            {
-                DOEndRotate();
-            }
-            else
-            {
-                return;
-            }
-        });
+        UIManager.instance.SetActivationSpeakingPanel(true);
+        SetIsBusy(true);
+    }
+    public void SetIsSpeaking(bool _speak)
+    {
+        _speakingEnd = _speak;
+    }
+    public bool GetIsSpeaking()
+    {
+        return _speakingEnd;
+    }
+    public void SetIsBusy(bool _isBusy)
+    {
+        isBusy = _isBusy;
+    }
+    public bool GetIsBusy()
+    {
+        return isBusy;
     }
 }

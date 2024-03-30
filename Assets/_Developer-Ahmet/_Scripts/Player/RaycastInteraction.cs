@@ -7,6 +7,7 @@ public class RaycastInteraction : MonoBehaviour
     [SerializeField] Camera _mainCamera;
     [SerializeField] LayerMask _interactableLayers;
     [SerializeField] LayerMask _collectableLayers;
+    [SerializeField] LayerMask _speakableLayers;
     void FixedUpdate()
     {
         
@@ -50,6 +51,19 @@ public class RaycastInteraction : MonoBehaviour
                 UIManager.instance.CollectPanelActivation(true);
                 CollectPanelController.instance.SetCurrentCollectable(currentCollectable);
             }            
+        }
+        if (Physics.Raycast(ray, out hitInfo, maxDistance, _speakableLayers))
+        {
+            Debug.Log("Speakable Object Hit => " + hitInfo.collider.gameObject);
+            // Iþýn belirli bir nesneye çarptý
+            // Burada çarpýþan nesneyle ilgili iþlemleri yapabilirsiniz
+            GameObject hitObject = hitInfo.collider.gameObject;
+            Speakable currentSpeakable = hitObject.GetComponent<Speakable>();
+            // Toplama islemleri
+            if (currentSpeakable.GetIsSpeak())
+            {
+                UIManager.instance.SetActivationSpeakingPanel(true);
+            }
         }
     }
 }

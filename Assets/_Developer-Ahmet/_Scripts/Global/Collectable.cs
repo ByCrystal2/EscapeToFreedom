@@ -5,21 +5,49 @@ using UnityEngine;
 public class Collectable : MonoBehaviour, ICollectable
 {
     [SerializeField] CollectType _collectableType;
+    [Header("Target Tools")]
+    [SerializeField] Interactable[] _targetTools;
     [Header("PaperTools")]
-    [SerializeField] string _headerText;
-    [SerializeField] string _messageText;
-    public int ItemDataID; // Collectable items Starter ID is 5000;
+    public GameText _info;
+    public int ItemDataID;
+    public int TextInfoID;
     private bool isCollected;
+    private void Awake()
+    {
+        _info = TextManager.instance.GetFriendTextWithID(TextInfoID);
+        Debug.Log("My Text Informations => " +  _info.Text);
+    }
+    private void OnValidate()
+    {
+        TextInfoID = ItemDataID;
+    }//
     public void Collect()
     {
         switch (_collectableType)
         {
             case CollectType.None:
                 break;
-            case CollectType.Paper:
-                UIManager.instance.SetActivationPaperPanel(true, _headerText, _messageText);
+            case CollectType.FriendPaper:
+                int collectedFriendNoteCount = CollectPanelController.instance.GetCollectedFrinednoteCount();
+                PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(collectedFriendNoteCount, TextInfoID, ComplateType.FriendNoteComplate);
+                CollectPanelController.instance.IncreaseCollectedFirendNoteCount();
+                UIManager.instance.SetActivationPaperPanel(true, _info.Title, _info.Text);
+
+                if (collectedFriendNoteCount == 1)
+                {
+                    GameManager.instance.GetCurrentSchoolFloorManager().GetMyToilet().SetIsSpeaking(true);
+                }
                 break;
             case CollectType.Key:
+                if (_targetTools != null && _targetTools.Length > 0)
+                {
+                    int length = _targetTools.Length;
+                    for (int i = 0; i < length; i++)
+                    {
+                        _targetTools[i].IsLocked = false;                       
+                    }
+                }
+                PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(CollectPanelController.instance.GetCollectedKeyCount(), TextInfoID, ComplateType.SecurityKeyComplate);
                 break;
             case CollectType.Mushroom:
                 break;
@@ -57,7 +85,7 @@ public class Collectable : MonoBehaviour, ICollectable
 public enum CollectType
 {
     None,
-    Paper,
+    FriendPaper,
     Key,
     Mushroom,
     Flower,

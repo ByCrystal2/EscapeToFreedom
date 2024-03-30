@@ -30,51 +30,64 @@ public class ItemManager : MonoBehaviour
     }
     private void Start()
     {
-        ItemData i1 = new ItemData(1, "Key1", "1. katta olan item", ItemType.Key);
-        ItemData i2 = new ItemData(2, "Key2", "2. katta olan item", ItemType.Key);
-        ItemData i3 = new ItemData(3, "Key3", "3. katta olan item", ItemType.Key);
-        ItemData i4 = new ItemData(4, "Key4", "4. katta olan item", ItemType.Key);
-        ItemData i5 = new ItemData(5, "Key5", "5. katta olan item", ItemType.Key);
-        ItemData i6 = new ItemData(6, "Key6", "6. katta olan item", ItemType.Key);
-        ItemData i7 = new ItemData(7, "Key7", "7. katta olan item", ItemType.Key);
-        ItemData i8 = new ItemData(8, "Key8", "8. katta olan item", ItemType.Key);
-        ItemData i9 = new ItemData(9, "Key9", "9. katta olan item", ItemType.Key);
-        ItemData i10 = new ItemData(10, "Key10", "10. katta olan item", ItemType.Key);
-
-        ItemData i11 = new ItemData(11, "Friend Paper", "10. katta erkekler tuvaletinde bulunan sýnýf arkadaþýnýn notu #1", ItemType.Paper);
-        ItemData i12 = new ItemData(12, "Test1_2", "2. katta olan item", ItemType.Flower);
-        ItemData i13 = new ItemData(13, "Test1_3", "3. katta olan item", ItemType.Flower);
-        ItemData i14 = new ItemData(14, "Test1_4", "4. katta olan item", ItemType.Flower);
-
-        ItemData i15 = new ItemData(15, "Test2_1", "1. katta olan item", ItemType.Mushroom);
-        ItemData i16 = new ItemData(16, "Test2_2", "2. katta olan item", ItemType.Apple);
-        ItemData i17 = new ItemData(17, "Test2_3", "3. katta olan item", ItemType.Book);
-        ItemData i18 = new ItemData(18, "Test2_4", "4. katta olan item", ItemType.Knife);
 
         ItemData i19 = new ItemData(19, "Crowbar", "7. katta olan item", ItemType.Crowbar);
 
-        _items.Add(i1);
-        _items.Add(i2);
-        _items.Add(i3);
-        _items.Add(i4);
-        _items.Add(i5);
-        _items.Add(i6);
-        _items.Add(i7);
-        _items.Add(i8);
-        _items.Add(i9);
-        _items.Add(i10);
 
-        _items.Add(i11);
-        _items.Add(i12);
-        _items.Add(i13);
-        _items.Add(i14);
+        ItemData ic_1 = new ItemData(2000, "Friend FriendPaper", "10. katta erkekler tuvaletinde bulunan arkadaþýnýn notu #1", ItemType.Paper);
+        ItemData ic_13 = new ItemData(2001, "Friend FriendPaper", "10. katta kütüphanede bulunan arkadaþýnýn notu #2", ItemType.Paper);
+        ItemData ic_14 = new ItemData(2002, "Friend FriendPaper", "9. katta masanýn üstünde bulunan arkadaþýnýn notu #3", ItemType.Paper);
+        ItemData ic_15 = new ItemData(2003, "Friend FriendPaper", "7. katta radyatorun altýnda ki arkadaþýnýn notu #4", ItemType.Paper);
+        ItemData ic_16 = new ItemData(2004, "Friend FriendPaper", "6. katta depoda bulunan arkadaþýnýn notu #5", ItemType.Paper);
+        ItemData ic_17 = new ItemData(2005, "Friend FriendPaper", "5. kat giriþinde ki masanýn üstünde bulunan arkadaþýnýn notu #6", ItemType.Paper);
+        ItemData ic_18 = new ItemData(2006, "Friend FriendPaper", "4. katta arkadaþýnýn sýnýfýnda bulunan arkadaþýnýn notu #7", ItemType.Paper);
+        ItemData ic_19 = new ItemData(2007, "Friend FriendPaper", "3. kat giriþinde ki sandalyenin altýnda bulunan arkadaþýnýn notu #8", ItemType.Paper);
+        ItemData ic_20 = new ItemData(2008, "Friend FriendPaper", "2. kat bilmeceler giriþinde bulunan arkadaþýnýn notu #9", ItemType.Paper);
+        ItemData ic_21 = new ItemData(2009, "Friend FriendPaper", "1. kat giriþinde bulunan arkadaþýnýn notu #10", ItemType.Paper);
+        
 
-        _items.Add(i15);
-        _items.Add(i16);
-        _items.Add(i17);
-        _items.Add(i18);
+        ItemData ic_2 = new ItemData(2100, "Key1", "1. katta olan item", ItemType.Key);
+        ItemData ic_3 = new ItemData(2101, "Key2", "2. katta olan item", ItemType.Key);
+        ItemData ic_4 = new ItemData(2102, "Key3", "3. katta olan item", ItemType.Key);
+        ItemData ic_5 = new ItemData(2103, "Key4", "4. katta olan item", ItemType.Key);
+        ItemData ic_6 = new ItemData(2104, "Key5", "5. katta olan item", ItemType.Key);
+        ItemData ic_7 = new ItemData(2105, "Key6", "6. katta olan item", ItemType.Key);
+        ItemData ic_8 = new ItemData(2106, "Key7", "7. katta olan item", ItemType.Key);
+        ItemData ic_9 = new ItemData(2107, "Key8", "8. katta olan item", ItemType.Key);
+        ItemData ic_10 = new ItemData(2108, "Key9", "9. katta olan item", ItemType.Key);
+        ItemData ic_11 = new ItemData(2109, "Key10", "10. katta olan item", ItemType.Key);
+
+        //Normal Door Keys
+        ItemData ic_12 = new ItemData(2011, "Spare Stair Door Key", "10. kat çýkýþ anahtarý", ItemType.Key);
+        
+
 
         _items.Add(i19);
+
+        _items.Add(ic_1);
+        _items.Add(ic_13);
+        _items.Add(ic_14);
+        _items.Add(ic_15);
+        _items.Add(ic_16);
+        _items.Add(ic_17);
+        _items.Add(ic_18);
+        _items.Add(ic_19);
+        _items.Add(ic_20);
+        _items.Add(ic_21);
+
+
+
+        _items.Add(ic_2);
+        _items.Add(ic_3);
+        _items.Add(ic_4);
+        _items.Add(ic_5);
+        _items.Add(ic_6);
+        _items.Add(ic_7);
+        _items.Add(ic_8);
+        _items.Add(ic_9);
+        _items.Add(ic_10);
+        _items.Add(ic_11);
+        _items.Add(ic_12);
         foreach (var item in _items)
         {
             if (item.ItemType == ItemType.Mushroom || item.ItemType == ItemType.Flower || item.ItemType == ItemType.Knife || item.ItemType == ItemType.Apple || item.ItemType == ItemType.Book)

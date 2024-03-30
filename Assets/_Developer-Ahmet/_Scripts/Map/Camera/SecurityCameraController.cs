@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SecurityCameraController : MonoBehaviour
 {
+    [SerializeField] bool isRotate = true;
     [SerializeField] Transform RotationObject;
     public float RotationTime = 5;
     public float PlayerRotationTime = 3;
@@ -14,6 +15,7 @@ public class SecurityCameraController : MonoBehaviour
     private Tweener currentRotationTween;
     void Start()
     {
+        if (!isRotate) return;
         GoRotatingEnd();
     }
     private void GoRotatingEnd()

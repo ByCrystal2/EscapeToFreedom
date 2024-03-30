@@ -10,11 +10,24 @@ public class Interactable : MonoBehaviour, IInteractable
     {        
         if (_interactableType == InteractableType.Door)
         {
-            //DoorBehavior _myDoor = GetComponent<DoorBehavior>();
+            DoorBehavior _myDoor = GetComponent<DoorBehavior>();
+            if (_myDoor.isEndGameDoor)
+            {
+                int keyCount = BookManager.instance.TotalSecurityKeyIsTenInPlayerInventory();
+                if (keyCount == 10)
+                {
+                    UIManager.instance.SetActivationEndGameDoorPanel(false);
+                    _myDoor.InteractDoor();
+                }
+                else
+                {
+                    UIManager.instance.SetActivationEndGameDoorPanel(true, keyCount);
+                }
+                return;
+            }
             if (!IsLocked)
             {
-                UIManager.instance.InteractPanelActivation(true);
-                GetComponent<DoorBehavior>().InteractDoor();
+                _myDoor.InteractDoor();
             }
             else
             {
@@ -43,6 +56,14 @@ public class Interactable : MonoBehaviour, IInteractable
                 }
             }            
         }
+        else if (_interactableType == InteractableType.Closet)
+        {
+            MainToiletBehaviour myBehaviour = GetComponent<MainToiletBehaviour>();
+            if (!myBehaviour.GetIsBusy())
+            {
+                UIManager.instance.InteractPanelActivation(true);
+            }
+        }
         else
         {
             UIManager.instance.InteractPanelActivation(false);
@@ -54,7 +75,8 @@ public enum InteractableType
 {
     Door,
     Locker,
-    FireAlarm
+    FireAlarm,
+    Closet
 }
 public enum Direction
 {

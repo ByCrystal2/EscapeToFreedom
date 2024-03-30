@@ -120,8 +120,6 @@ public class PuzzleManager : MonoBehaviour
         GameMission gm3 = new GameMission(3, "Ana Görev 3", "Envanterini Aç. (I)", MissionLevel.Easy);
         // 3 gorev basarili bir sekilde yapildiktan sonra tuvallete ki kagidi bul gorevi geliyor.
         
-        
-
         MainStoryMissions.Add(gm1);
         MainStoryMissions.Add(gm2);
         MainStoryMissions.Add(gm3);
@@ -225,7 +223,7 @@ public class PuzzleManager : MonoBehaviour
             }
         }
     }
-    private int ComplatedMissionsCount;
+    private int ComplatedMainStoryMissionsCount;
     private void MainStoryMissionComplate(GameMission _mission)
     {
         if (MainStoryMissions.Contains(_mission))
@@ -235,15 +233,178 @@ public class PuzzleManager : MonoBehaviour
             else
             {
                 _mission.SetIsComplate(true);
-                ComplatedMissionsCount++;
+                ComplatedMainStoryMissionsCount++;
                 MainStoryMissions.Remove(_mission);
-                if (ComplatedMissionsCount == 3)
-                {
-                    GameMission gm4 = new GameMission(2000, "Ana Görev 4", "Tuvallete ki notu bul.", MissionLevel.Easy);
-                    AddMissionInMainStoryContent(gm4);
-                }
+                ComplatedMainStoryControlAndAddMission(ComplatedMainStoryMissionsCount);
             }
         }
+    }
+    private void ComplatedMainStoryControlAndAddMission(int _id)
+    {
+        switch (_id)
+        {
+            case 3:
+                GameMission gm4 = new GameMission(2000, "Ana Görev 1", "Tuvallete ki notu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm4);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(0);
+                break;
+            case 4:
+                GameMission gm34 = new GameMission(2030, "Ana Görev 1", "Konuþan Klozeti bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm34);
+                break;
+            case 5:
+                GameMission gm5 = new GameMission(2001, "Ana Görev 2", "Kütüphanede ki güvenlik anahtarýný bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm5);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(1);
+                break;
+            case 6:
+                GameMission gm6 = new GameMission(2002, "Ana Görev 2", "Konuþan Klozeti bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm6);
+                break;
+            case 7:
+                GameMission gm7 = new GameMission(2003, "Ana Görev 2", "Kamera odasýnda ki personel odasý anahtarýný al.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm7);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(2);
+                break;
+            case 8:
+                GameMission gm8 = new GameMission(2004, "Ana Görev 2", "Personel odasýna git ve kapý anahtarýný bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm8);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(3);
+                break;            
+            case 9:
+                GameMission gm9 = new GameMission(2005, "Ana Görev 2", "9. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm9);
+                break;
+            case 10:
+                GameMission gm35 = new GameMission(2031, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm35);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(4);
+                break;
+            case 11:
+                GameMission gm10 = new GameMission(2006, "Ana Görev 2", "3. Koridorda ki Depoyu bul", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm10);
+                break;
+            case 12:
+                GameMission gm11 = new GameMission(2007, "Ana Görev 2", "2. Koridorda GÜVENLÝK ANAHTARI'ný bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm11);
+                // NOT: Bu anahtar 2. koridorda ki locker icerisinde bulunmaktadir.
+                break;
+            case 13:
+                GameMission gm12 = new GameMission(2008, "Ana Görev 2", "8. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm12);
+                break;
+            case 14:
+                GameMission gm13 = new GameMission(2009, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm13);
+                break;
+            case 15:
+                GameMission gm14 = new GameMission(2010, "Ana Görev 2", "Garip odada ki anahtarý bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm14);
+                //NOT: Bu anahtar mouse roomda ki locker icerisinde bulunmaktadir.
+                break;
+            case 16:
+                GameMission gm15 = new GameMission(2011, "Ana Görev 2", "7. Kata in", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm15);
+                break;
+            case 17:
+                GameMission gm16 = new GameMission(2012, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm16);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(5);
+                break;
+            case 18:
+                GameMission gm17 = new GameMission(2013, "Ana Görev 2", "6. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm17);
+                break;
+            case 19:
+                GameMission gm18 = new GameMission(2014, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm18);
+                break;
+            case 20:
+                GameMission gm19 = new GameMission(2015, "Ana Görev 2", "Depo'da ki arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm19);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(6);
+                break;
+            case 21:
+                GameMission gm20 = new GameMission(2016, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm20);
+                break;
+            case 22:
+                GameMission gm21 = new GameMission(2017, "Ana Görev 2", "Güvenlik Anahtarý'ný bul #1.", MissionLevel.Easy);
+                GameMission gm22 = new GameMission(2018, "Ana Görev 2", "Güvenlik Anahtarý'ný bul #2.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm21);
+                AddMissionInMainStoryContent(gm22);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(7);
+                break;
+            case 23:
+                GameMission gm36 = new GameMission(2032, "Ana Görev 2", "5. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm36);
+                break;
+            case 24:
+                GameMission gm37= new GameMission(2033, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm37);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(8);
+                break;
+            case 25:
+                GameMission gm38 = new GameMission(2034, "Ana Görev 2", "4. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm38);
+                break;
+            case 26:
+                GameMission gm23 = new GameMission(2019, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm23);
+                break;
+            case 27:
+                GameMission gm24 = new GameMission(2020, "Ana Görev 2", "Arkadaþýnýn sýnýfýna git ve notunu bul", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm24);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(9);                
+                break;
+            case 28:
+                GameMission gm25 = new GameMission(2021, "Ana Görev 2", "Güvenlik Anahtarý'ný bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm25);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(10);
+                break;
+            case 29:
+                GameMission gm26 = new GameMission(2022, "Ana Görev 2", "3. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm26);
+                break;
+            case 30:
+                GameMission gm27 = new GameMission(2023, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm27);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(11);
+                break;
+            case 31:
+                GameMission gm28 = new GameMission(2024, "Ana Görev 2", "Güvenlik anahtarýný bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm28);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(12);
+                break;
+            case 32:
+                GameMission gm29 = new GameMission(2025, "Ana Görev 2", "2. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm29);
+                break;
+            case 33:
+                GameMission gm39 = new GameMission(2035, "Ana Görev 2", "Konuþan Klozeti bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm39);
+                break;
+            case 34:
+                GameMission gm30 = new GameMission(2026, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm30);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(13);
+                break;
+            case 35:
+                GameMission gm31 = new GameMission(2027, "Ana Görev 2", "Güvenlik anahtarýný bul. #1", MissionLevel.Easy);
+                GameMission gm32 = new GameMission(2028, "Ana Görev 2", "Güvenlik anahtarýný bul. #2", MissionLevel.Easy);                
+                AddMissionInMainStoryContent(gm31);
+                AddMissionInMainStoryContent(gm32);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(14);
+                break;
+            case 36:
+                GameMission gm40 = new GameMission(2036, "Ana Görev 2", "1. Kata in.", MissionLevel.Easy);
+                AddMissionInMainStoryContent(gm40);
+                MissionsManager.instance.ActivationDesiredMainStoryMission(15);
+                break;
+            default:
+                break;
+        }
+       
     }
     public void AddMissionCoroutine(Coroutine newCoroutine)
     {

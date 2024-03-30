@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -40,6 +41,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject SlotItemInfoPanel;
     [Header("SpeakingPanel")]
     [SerializeField] GameObject SpeakingPanel;
+    [Header("PlayerAwakePanel")]
+    [SerializeField] GameObject PlayerAwakePanel;
+    [SerializeField] PlayableDirector playerAwalePlayable;
+    [Header("EndGameToolsl")]
+    [SerializeField] GameObject endGamePanel;
+    [SerializeField] GameObject endGameDoorPanel;
+    [SerializeField] TextMeshProUGUI txtEndGameDoorText;
     public static UIManager instance { get; private set; }
     private void Awake()
     {
@@ -67,7 +75,16 @@ public class UIManager : MonoBehaviour
     }
     public void StartTheGame()
     {
-        GameManager.instance.StartGame();
+        SetActivationMenuPanel(false);
+        SetActivationPlayerAwakePanel(true);
+    }
+    public void PlayPlayerAwakePlayable()
+    {
+        playerAwalePlayable.Play();
+    }
+    public void StopPlayerAwakePlayable()
+    {
+        playerAwalePlayable.Stop();
     }
     public void SetActivationMenuPanel(bool _active)
     {
@@ -104,8 +121,9 @@ public class UIManager : MonoBehaviour
     public void SetActivationPaperPanel(bool _active, string _header = null, string _message = null)
     {
         PlayerManager.instance.PlayerLock();
-        PaperPanel.SetActive(_active);
+        
         if (!_active) return;
+        PaperPanel.SetActive(_active);
         PaperPanel.GetComponent<CanvasGroup>().DOFade(1, 1f).OnComplete(() =>
         {
             if (_header != null && _message != null)
@@ -123,8 +141,42 @@ public class UIManager : MonoBehaviour
         }
     }
     public void SetActivationSpeakingPanel(bool  _active)
+    {        
+        if (_active)
+        {
+            SpeakingPanel.SetActive(true);
+            SpeakingPanelController.PlayToiletSpeakingPlayable();
+        }
+        else
+        {
+            SpeakingPanelController.StopToiletSpeakingPlayable();
+            SpeakingPanel.SetActive(false);
+        }
+    }
+    public void SetActivationPlayerAwakePanel(bool _active)
     {
-        SpeakingPanel.SetActive(_active);
+        if (_active)
+        {
+            PlayerAwakePanel.SetActive(true);
+            PlayPlayerAwakePlayable();
+        }
+        else
+        {
+            StopPlayerAwakePlayable();
+            PlayerAwakePanel.SetActive(false);
+        }
+    }
+    public void SetActivationEndGameDoorPanel(bool _active, int _keyCount = 0)
+    {
+        if (_active)
+        {
+            endGameDoorPanel.SetActive(true);
+            txtEndGameDoorText.text = $"Güvenlik anahtarý eksik [{_keyCount}/10]";
+        }
+        else
+        {
+            endGameDoorPanel.SetActive(false);
+        }
     }
     public void LockedInteractPanelActivation(bool _active)
     {

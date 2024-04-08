@@ -14,7 +14,7 @@ public class SpeakingPanelController : MonoBehaviour
     [SerializeField] Animator toiletAnimator;
     [SerializeField] Sprite[] speakingSprites; // [0] => Player, [1] => Closet ... => WhoNext Enum;
 
-    private bool _waitSetup;
+    Coroutine waitCoroutine;
     private void OnEnable()
     {
         if (toiletSpeakingPlayable == null)
@@ -22,13 +22,24 @@ public class SpeakingPanelController : MonoBehaviour
             toiletSpeakingPlayable = GetComponentInChildren<PlayableDirector>();
         }
     }
+    bool isSkipped;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            _waitSetup = false;
-            TextManager.instance.GetTheNextText();
-            SetupUIs();
+            isSkipped = !isSkipped;
+            if (isSkipped)
+            {
+                if (waitCoroutine!=null)
+                    StopCoroutine(waitCoroutine);
+                TextManager.instance.SetWaitSetup(true);
+                WriteSkippedText();
+            }
+            else
+            {
+                TextManager.instance.GetTheNextText();
+                TextManager.instance.SetWaitSetup(false);
+            }
         }
     }
     public static void PlayToiletSpeakingPlayable()
@@ -39,18 +50,26 @@ public class SpeakingPanelController : MonoBehaviour
     {
         toiletSpeakingPlayable.Stop();
     }
-    
+    private void WriteSkippedText()
+    {
+        txtMessage.text = TextManager.instance.GetCurrentText().Text;
+    }
     public void SetupUIs() // SpeakingSetupUIs Signal
     {
-        if (_waitSetup) return;
+        if (TextManager.instance.GetWaitSetup()) return;
         GameText currentText = TextManager.instance.GetCurrentText();
-        
-        _waitSetup = true;
+        if (true)
+        {
+
+        }
+        if (waitCoroutine != null)
+            StopCoroutine(waitCoroutine);
+        TextManager.instance.SetWaitSetup(true);
         imgIcon.sprite = GetSpeakingSprite(currentText);
         txtHeader.text = currentText.Title;
         txtMessage.text = "";
         // Coroutine ile metni yazdýr
-        StartCoroutine(WriteTextRoutine());
+        waitCoroutine = StartCoroutine(WriteTextRoutine());
     }
     public void StartOrStopAnimator(bool _start)
     {
@@ -80,17 +99,20 @@ public class SpeakingPanelController : MonoBehaviour
             yield return frame;
         }
         GameText currentText = TextManager.instance.GetTheNextText();
-        Debug.Log("Mevcut Text'in harf sayisi bitti. Sirada ki Text => " + currentText.ID);
-        if (currentText.Who == WhosNext.Closet)
+        if (currentText != null)
         {
-            StartOrStopAnimator(true);
-        }
-        else
-        {
-            StartOrStopAnimator(false);
-        }
-        _waitSetup = false;
+            if (currentText.Who == WhosNext.Closet)
+            {
+                StartOrStopAnimator(true);
+            }
+            else
+            {
+                StartOrStopAnimator(false);
+            }
+        }        
+        TextManager.instance.SetWaitSetup(false);
     }
+    
     public char WriteText(char _c)
     {
         txtMessage.text += _c;

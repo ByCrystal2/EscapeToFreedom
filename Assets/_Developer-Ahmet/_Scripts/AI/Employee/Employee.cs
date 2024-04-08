@@ -9,6 +9,7 @@ public class Employee : TaskAbstract
     public float Speed;
     public float BodyStrength;
     public EmployeeType EmployeeType;
+    public EmployeeState EmployeeState;
     public Employee(int _id, string _name, float _speed, EmployeeType _type)
     {
         ID = _id;
@@ -61,16 +62,19 @@ public class Personnel : Employee
                 }
             }
         }
+        behaviour._agent.SetDestination(_target.position);
         if (_distance <= 0.5)
         {
             if (!(behaviour._targetType == TargetType.Player) && behaviour._targetType == TargetType.Pacing)
             {
-                behaviour.SetRandomGoTarget();
+                // personel Targete (pacing) geldi.
+                EmployeeState = EmployeeState.Waiting;  
+                behaviour.StartWaitForIdle();
             }            
         }
-        Debug.Log("_target.position => " + _target.position);
-        behaviour._agent.SetDestination(_target.position);
+        
     }    
+    
 }
 public interface IWalkable
 {
@@ -122,8 +126,15 @@ public enum TaskType
 public enum EmployeeType
 {
     None,
-    Persomnel,
+    Personnel,
     Security
+}
+public enum EmployeeState
+{
+    None,
+    Pacing,
+    Chasing,
+    Waiting
 }
 public enum TargetType
 {

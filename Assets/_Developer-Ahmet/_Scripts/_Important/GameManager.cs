@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private GameEndType _gameEndType;
     [SerializeField] private SchoolFloor _currentSchoolFloor = SchoolFloor.TenthFloor;
     public List<SchoolFloorManager> _FloorManagers = new List<SchoolFloorManager>();
-
+    [SerializeField] MainToiletBehaviour[] allToilets;
     public GameObject CatchedPlayerPersonnelObj;
     public PersonnelBehaviour CurrentCathedPlayerPersonel;
 
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     }
     private void Init()
     {
+        allToilets = FindObjectsOfType<MainToiletBehaviour>();
+        ItemManager.instance.InitItems();
         PuzzleManager.instance.PuzzlesInit();
         TextManager.instance.TextsInit();
         AudioManager.instance.SourcesInit();
@@ -90,6 +92,20 @@ public class GameManager : MonoBehaviour
         PlayerManager.instance.PlayerLock();
         GetDesiredSchoolManager(_currentSchoolFloor).AllFloorPersonnelsCatchThePlayer();
     }
+    public void SetAllToiletIsSepakingActivation(bool _active)
+    {
+        int length = allToilets.Length;
+        for (int i = 0; i < length; i++)
+        {
+            allToilets[i].SetIsSpeaking(_active);
+            allToilets[i].SetIsBusy(!_active);
+        }
+        TextManager.instance.SetWaitSetup(_active);
+    }
+    public MainToiletBehaviour[] GetAllToilets()
+    {
+        return allToilets;
+    }
     public SchoolFloorManager GetCurrentSchoolFloorManager()
     {
         return currentFloorManager;
@@ -109,14 +125,19 @@ public class GameManager : MonoBehaviour
             StartCoroutine(WaitForCatchedPlayerDistancing());
         }
         else
-        {
-            CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>().enabled = false;
+        {           
+            PersonnelBehaviour p = CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>();
+            p.anim.SetInteger("Idle", 0);
+            p.enabled = false;
+            p.anim.enabled = false;
         }
     }
     IEnumerator WaitForCatchedPlayerDistancing()
     {
         yield return new WaitForSeconds(5);
-        CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>().enabled = true;
+        PersonnelBehaviour p = CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>();
+        p.enabled = true;
+        p.anim.enabled = true;
         CatchedPlayerPersonnelObj.GetComponent<PersonnelBehaviour>().SetRandomGoTarget();
 
     }

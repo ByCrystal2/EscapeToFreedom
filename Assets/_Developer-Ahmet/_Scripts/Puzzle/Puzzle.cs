@@ -9,9 +9,11 @@ public class Puzzle
     public string Header;
     public int TimeInterval;
     public MissionLevel Level;
+    public SchoolFloor TargetFloor;
     public List<GameMission> Missions = new List<GameMission>();
     private bool isComplate;
-    public Puzzle(int _id, string _header, int _timeInterval, List<GameMission> _puzzleMissions, MissionLevel _level)
+    private bool isMissionDelivered;
+    public Puzzle(int _id, string _header, int _timeInterval, List<GameMission> _puzzleMissions, MissionLevel _level, SchoolFloor _targetFloor)
     {
         ID = _id;
         Header = _header;
@@ -23,14 +25,28 @@ public class Puzzle
         {
             Missions.Add(_puzzleMissions[i]);
         }
+        TargetFloor = _targetFloor;
+        isMissionDelivered = false;
+    }
+    public bool GetIsDelivered()
+    {
+        return isMissionDelivered;
     }
     public bool GetIsComplate()
     {
         return isComplate;
     }
+    public void SetIsDelivered(bool _isDelivered)
+    {
+        isMissionDelivered = _isDelivered;
+    }
     public void SetIsComplate(bool _complate)
     {
         isComplate = _complate;
+    }
+    public void AddMission(GameMission _mission)
+    {
+        Missions.Add(_mission);
     }
     public List<GameMission> GetDesiredDifficultyMission(MissionLevel _level)
     {

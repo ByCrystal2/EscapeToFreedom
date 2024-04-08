@@ -12,7 +12,7 @@ public class PuzzleBehaviour : MonoBehaviour
     {
         if (_step == 0)
         {
-            StartCoroutine(TimeManager.instance.TimeControl(_puzzle.TimeInterval, txtTime, null,GameManager.instance.CurrentCathedPlayerPersonel));
+            TimeManager.instance.StartPuzzleTime(_puzzle.TimeInterval, txtTime, _puzzle,GameManager.instance.CurrentCathedPlayerPersonel);
             UIManager.instance.StartDOMovePuzzlePanel();
         }
     }

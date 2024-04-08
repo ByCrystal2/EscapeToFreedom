@@ -22,8 +22,19 @@ public class MissionsManager : MonoBehaviour
     {
         _mainstoryContent.GetChild(_desiredChild).gameObject.SetActive(true);
     }
-    public void ActivationDesiredPuzzleMission(int _desiredChild)
+    public void ActivationDesiredPuzzleMission(SchoolFloor _targetFloor, int _puzzleID)
     {
-        _puzzleContent.GetChild(_desiredChild).gameObject.SetActive(true);
+        Transform puzzleChildObj = _puzzleContent.GetChild((int)_targetFloor);
+        int length = puzzleChildObj.transform.childCount;
+        for (int i = 0; i < length; i++)
+        {
+            if (puzzleChildObj.GetChild(i).TryGetComponent(out PuzzleChild _pc))
+            {
+                if (_pc.GetTargetPuzzleID() == _puzzleID)
+                {
+                    puzzleChildObj.GetChild(i).gameObject.SetActive(true);
+                }                
+            }
+        }
     }
 }

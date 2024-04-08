@@ -62,7 +62,29 @@ public class Interactable : MonoBehaviour, IInteractable
             if (!myBehaviour.GetIsBusy())
             {
                 UIManager.instance.InteractPanelActivation(true);
+                myBehaviour.InteractCloset();
             }
+            else
+            {
+
+            }
+        }
+        else if (_interactableType == InteractableType.Personnel)
+        {
+            PersonnelBehaviour myBehaviour = GetComponent<PersonnelBehaviour>();
+            if (!myBehaviour.GetIsCanCatchPlayer())
+            {
+                if (!myBehaviour.GetIsBusy())
+                {
+                    UIManager.instance.InteractPanelActivation(true);
+                    myBehaviour.InteractPersonnel();
+                }
+                else
+                {
+
+                }
+            }
+            
         }
         else
         {
@@ -76,7 +98,8 @@ public enum InteractableType
     Door,
     Locker,
     FireAlarm,
-    Closet
+    Closet,
+    Personnel
 }
 public enum Direction
 {

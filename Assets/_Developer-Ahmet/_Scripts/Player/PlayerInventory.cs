@@ -45,21 +45,5 @@ public class PlayerInventory : MonoBehaviour
     public void RemoveItemInInventory(ItemData itemData)
     {
         _currentItems.Remove(itemData);
-    }
-    [CustomEditor(typeof(PlayerInventory))] // YourScript yerine eklemek istediðiniz betiði belirtin
-    public class YourScriptEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-
-            PlayerInventory script = (PlayerInventory)target;
-
-            if (GUILayout.Button("AddItem"))
-            {
-                // Butona týklandýðýnda yapýlacak iþlemler burada gerçekleþtirilir
-                script.AddRandomItemInInventory(); // Örneðin, belirli bir metodu çaðýrabilirsiniz
-            }
-        }
-    }
+    }  
 }

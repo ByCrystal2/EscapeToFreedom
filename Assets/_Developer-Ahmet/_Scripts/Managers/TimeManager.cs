@@ -7,6 +7,7 @@ using UnityEngine;
 public class TimeManager : MonoBehaviour
 {
     Coroutine GameTimeCoroutine;
+    Coroutine PuzzleTimeCoroutine;
     [SerializeField] int totalGameTime = 3600;
     public static TimeManager instance { get; private set; }
     private void Awake()
@@ -19,18 +20,11 @@ public class TimeManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    public IEnumerator TimeControl(int totalSeconds, TextMeshProUGUI _text, Puzzle _puzzle = null, PersonnelBehaviour _currentPersonnel = null)
+    
+    private IEnumerator TimeControl(int totalSeconds, TextMeshProUGUI _text, Puzzle _puzzle = null, PersonnelBehaviour _currentPersonnel = null)
     {
         while (totalSeconds >= 0)
         {
-            if (_puzzle != null)
-            {
-                if (_puzzle.GetIsComplate())
-                {
-                    
-                    break;
-                }
-            }
             string timeText;
             TimeSpan timeSpan = TimeSpan.FromSeconds(Mathf.Max(totalSeconds, 0));            
             if (timeSpan.Hours > 0)
@@ -66,6 +60,10 @@ public class TimeManager : MonoBehaviour
             }
         }
     }
+    public void StartPuzzleTime(int totalSeconds, TextMeshProUGUI _text, Puzzle _puzzle = null, PersonnelBehaviour _currentPersonnel = null)
+    {
+        PuzzleTimeCoroutine = StartCoroutine(TimeControl(totalSeconds,_text,_puzzle,_currentPersonnel));
+    }
     public void StartGameTime()
     {
         UIManager.instance.SetActivationGameTimePanel(true);
@@ -73,6 +71,10 @@ public class TimeManager : MonoBehaviour
         {
             GameTimeCoroutine = StartCoroutine(TimeControl(totalGameTime, UIManager.instance.txtGameTime));
         }
+    }
+    public void StopPuzzleTimeCoroutine()
+    {
+        StopCoroutine(PuzzleTimeCoroutine);
     }
     public void StopGameTimeCoroutine()
     {

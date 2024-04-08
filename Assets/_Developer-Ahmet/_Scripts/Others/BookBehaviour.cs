@@ -19,8 +19,6 @@ public class BookBehaviour : MonoBehaviour
         startPosition = transform.localPosition;
         endPosition = new Vector3(Random.Range(startPosition.x, startPosition.x + 30), startPosition.y, startPosition.z);
         perlinScale = Random.Range(0, 10);
-        Debug.Log("objenin baslangic pozisyonu :" + startPosition);
-        Debug.Log("objenin bitis pozisyonu :" + endPosition);
         Vertical = Random.Range(-1.2f, 2f);
         while (Vertical == 0)
         {

@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PlayerLock()
     {
+        UIManager.instance.SetActivationGameTimePanel(false);
         player.IsBusy = true;
         player.MoveSpeed = 0;
         player.SprintSpeed = 0;
@@ -48,6 +49,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PlayerUnlock()
     {
+        UIManager.instance.SetActivationGameTimePanel(true);
         player.IsBusy = false;
         player.MoveSpeed = _baseMoveSpeed;
         player.SprintSpeed = _baseSprintSpeed;

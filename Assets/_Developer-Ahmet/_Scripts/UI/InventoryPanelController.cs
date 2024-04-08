@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-
 public class InventoryPanelController : MonoBehaviour
 {
     [SerializeField] public Toggle[] _inventoryToggles;
@@ -63,7 +61,7 @@ public class InventoryPanelController : MonoBehaviour
         (List<ItemData> currentItems, bool isHaveItem, GameObject currentItemPrefab, string headerText)
             = (_index) switch
         {            
-            1 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Paper), true, ItemManager.instance.PaperItemPrefab, "Notes"),
+            1 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.FriendPaper), true, ItemManager.instance.PaperItemPrefab, "Notes"),
             2 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Crowbar), true, ItemManager.instance.CrowbarItemPrefab, "Crowbars"),
             3 => (ItemManager.instance.GetDesiredPlayerInventoryItemTypeItems(ItemType.Key), true, ItemManager.instance.KeyItemPrefab, "Keys"),
             _ => (new List<ItemData>(), false,new GameObject(), "Empty")
@@ -115,6 +113,7 @@ public class InventoryPanelController : MonoBehaviour
                     _slot.SetIsFull(true);
                     GameObject newItem = Instantiate(item, _slot.transform);
                     newItem.GetComponent<SlotItem>().SetMyData(playerItemData);
+                    newItem.GetComponent<Collectable>().SetIDOptions(playerItemData.ID,true,true);
                     Debug.Log(newItem + " is added selected tab inventory");
                     break;
                 }

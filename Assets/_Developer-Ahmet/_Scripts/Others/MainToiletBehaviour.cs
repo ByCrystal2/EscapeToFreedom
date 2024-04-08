@@ -23,7 +23,9 @@ public class MainToiletBehaviour : MonoBehaviour
     }
     public void StartInteract()
     {
+        PlayerManager.instance.PlayerLock();
         UIManager.instance.SetActivationSpeakingPanel(true);
+        TextManager.instance.SetWaitSetup(true);
         SetIsBusy(true);
     }
     public void SetIsSpeaking(bool _speak)

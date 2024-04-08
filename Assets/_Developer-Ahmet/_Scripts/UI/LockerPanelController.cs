@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LockerPanelController : MonoBehaviour
@@ -34,9 +35,9 @@ public class LockerPanelController : MonoBehaviour
     }
     public void RemoveItemInCurrentLocker(ItemData _item)
     {
-        currentLocker.MyItems.Remove(_item);
+        currentLocker.MyItemsIDs.Remove(_item.ID);
         ItemManager.instance.AddInventoryInPlayerInventory(_item);
-        if (currentLocker.MyItems.Count <= 0)
+        if (currentLocker.MyItemsIDs.Count <= 0)
         {
             currentLocker._isEmpty = true;
         }
@@ -45,14 +46,14 @@ public class LockerPanelController : MonoBehaviour
     }
     public void AddItemInCurrentLocker(ItemData _item)
     {
-        currentLocker.MyItems.Add(_item);
+        currentLocker.MyItemsIDs.Add(_item.ID);
         ClearInventoryContent();
         AddLockerItemsInLockerContentSlots();
     }
     private void AddLockerItemsInLockerContentSlots()
     {
         
-        AddItemsInSelectedLockerContent(currentLocker.MyItems);
+        AddItemsInSelectedLockerContent(currentLocker.MyItemsIDs);
     }
     private void ClearInventoryContent()
     {
@@ -72,8 +73,17 @@ public class LockerPanelController : MonoBehaviour
         }
         Debug.Log("Silinen slot itemi sayisi => " + fullSlotCount);
     }
-    public void AddItemsInSelectedLockerContent(List<ItemData> items)
+    
+    public void AddItemsInSelectedLockerContent(List<int> _items)
     {
+        List<ItemData> items = new List<ItemData>();
+        List<ItemData> allItems = ItemManager.instance.GetAllItems();
+        int length = _items.Count;
+        for (int i = 0; i < length; i++)
+        {
+            ItemData currentItem = allItems.Where(x => x.ID == _items[i]).SingleOrDefault();
+            items.Add(currentItem);
+        }
         List<InventorySlotObj> SlotContents = new List<InventorySlotObj>();
         int length1 = _lockerSlotsContent.childCount;
         int SlotCount = 0;
@@ -93,8 +103,8 @@ public class LockerPanelController : MonoBehaviour
             }
         }
 
-        int length = items.Count;
-        for (int i = 0; i < length; i++)
+        int length2 = items.Count;
+        for (int i = 0; i < length2; i++)
         {
             InventorySlotObj currentSlot = SlotContents[i];
             
@@ -106,6 +116,7 @@ public class LockerPanelController : MonoBehaviour
             {
                 GameObject newItem = Instantiate(CurrentItemObj, currentSlot.transform);
                 SlotItem slotItem = newItem.GetComponent<SlotItem>();
+                Collectable collectable = newItem.GetComponent<Collectable>();
                 if (slotItem != null)
                 {
                     slotItem.SetMyData(currentItem);
@@ -113,7 +124,11 @@ public class LockerPanelController : MonoBehaviour
                     Debug.Log(newItem + " is added locker content");
                 }
                 else Debug.Log("SlotItem is Null! Locker => " + currentLocker.name + " Slot => " + currentSlot.name);
-                          
+                if (collectable != null)
+                {
+                    collectable.SetIDOptions(currentItem.ID, true,true);
+                }
+                else Debug.Log("collectable is Null! Locker => " + currentLocker.name + " Collectable => " + slotItem.name);
             }
             
         }   

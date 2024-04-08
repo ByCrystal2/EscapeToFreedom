@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Micosmo.SensorToolkit.PulseJob;
 public class TextManager : MonoBehaviour
 {
     List<GameText> ToiletSpeakingTexts = new List<GameText>();
     List<GameText> MainStoryFriendTexts = new List<GameText>();
+    List<GameText> MainStoryKeyTexts = new List<GameText>();
+    List<GameText> PuzzleOtherTexts = new List<GameText>();
+    List<GameText> PuzzlesTexts = new List<GameText>();
     GameText _currentText;
     WhichStep currentStep;
+    private bool _waitSetup;
     public static TextManager instance { get; private set; }
     private void Awake()
     {
@@ -25,12 +30,14 @@ public class TextManager : MonoBehaviour
     {
         ToiletSpeakingTextsInit();
         MainStoryFriendTextsInit();
-        GlobalTextsInit();
+        MainStoryKeyTextsInit();
+        PuzzleOtherTextsInit();
+        PuzzlesTextsInit();
     }
     private void ToiletSpeakingTextsInit()
     {
         // STEP 1
-        GameText t1 = new GameText(1, "Sonunda uyandýn! Hoþ geldin, kardeþim.", "Konuþan Klozet", WhosNext.Closet,WhichStep.Step1);
+        GameText t1 = new GameText(1, "Sonunda uyandýn! Hoþ geldin.", "Konuþan Klozet", WhosNext.Closet,WhichStep.Step1);
         GameText t2 = new GameText(2, "NE! NELER OLUYOR BURDA!", "Sen", WhosNext.Player, WhichStep.Step1);
         GameText t3 = new GameText(3, "NEREDEYÝM BEN!", "Sen", WhosNext.Player, WhichStep.Step1);
         GameText t4 = new GameText(4, "SENDE NEYÝN NESÝSÝN!!!", "Sen", WhosNext.Player, WhichStep.Step1);
@@ -106,7 +113,7 @@ public class TextManager : MonoBehaviour
         // STEP 3
         GameText t34 = new GameText(34, "Kütühnade anahtarlý bir not daha buldum.", "Sen", WhosNext.Player, WhichStep.Step3);
         GameText t35 = new GameText(35, "Evet. O oda güvenlik odasý! Sanýrým arkadaþýnýn demek istediðini anladým. Bir sonraki güvenlik anahtarý alt katta olmalý. Alt kata inmen gerekiyor.", "Konuþan Klozet", WhosNext.Closet, WhichStep.Step3);
-        GameText t36 = new GameText(36, "Peki nereden alt kata ineceðim.", "Sen", WhosNext.Player, WhichStep.Step3);
+        GameText t36 = new GameText(36, "Peki nereden alt kata ineceðim?", "Sen", WhosNext.Player, WhichStep.Step3);
         GameText t37 = new GameText(37, "Merdivenin olduðu kýsým kilitli. Anahtarlar genelde personel odasýnda bulunur. Fakat personel odasýda kilitli. Yedek anahtarlar kamera odasýnda olabilir.", "Konuþan Klozet", WhosNext.Closet, WhichStep.Step3);
         GameText t38 = new GameText(38, "Kütüphanenin yanýnda ki odayý kastediyorsun sanýrým.", "Sen", WhosNext.Player, WhichStep.Step3);
         GameText t39 = new GameText(39, "Evet o oda! Ancak personele dikkat etmelisin. Kamera odasý ve personel odasý arasýnda sürekli dolanýr. Ýyi þanslar!", "Konuþan Klozet", WhosNext.Closet, WhichStep.Step3);
@@ -216,27 +223,24 @@ public class TextManager : MonoBehaviour
         // STEP 8
 
         _currentText = ToiletSpeakingTexts[0];
+        currentTextString = _currentText.Text;
         currentStep = _currentText.Step;
-    }
-    private void GlobalTextsInit()
-    {
-        GameText tg_1 = new GameText(3000, "Konuþan Klozet", "Konuþan Klozet ile görüþ.");
     }
     private void MainStoryFriendTextsInit()
     {
         GameText tc_1 = new GameText(2000, "Arkadaþýndan Bir Not #1", "Burada neler oluyor hiç bir fikrim yok. Uyandýðýmda yaný baþýmda konuþan bir klozet vardý. Buradan hareket edemiyordu. Yýllardýr bu okulda olduðunu söyledi. Ama son zamanlarda bir þeyler deðiþmiþ. Beni dikkatli olmam konusunda uyardý. Uyarýlarýný dikkate alarak bilgi toplamak için yola koyuldum. Gizlice koridorlarda dolanýrken, siyah giyimli personellerin aralarýnda konuþmalarýný duyuyordum ve sesleri gittikçe yaklaþýyordu. Hemen saklanmam gerekiyordu. Gördüðüm ilk kapýdan içeriye atladým. Kafamý kaldýrdýðým ilk an, buranýn bir kütüphane olduðunu anladým. Bir not buldum. Notta bir pazarlýktan bahsediyordu. Çýkýþ yolu için bulmam gereken anahtarlar olduðunu öðrendim. Notun devamýný okuyamadan saklanmak zorunda kaldým. Pazarlýðýn ne olduðunu, neden bu yerde olduðumu bilmiyorum. Korkuyorum! Buradan kaçmama asla izin vermeyecekler. Fakat bir yolunu bulacaðým...");
-        GameText tc_3 = new GameText(2001, "Arkadaþýndan Bir Not #2", "Ýlk anahtarý buldum. Diðerlerini bulmak bu kadar kolay olacakmý bilmiyorum. Anahtarlara dair hiç bir ipucu yok. Yan odada bazý sesler duydum. Klozetten gidip bir bilgi almam gerek galiba.");
-        GameText tc_5 = new GameText(2002, "Arkadaþýndan Bir Not #3", "Olamaz iþim çok zor! Hangi sivrizekalý anahtarý öðrenci dolabýna koymayý akýl ederki? Neyse ki 2. koridorda ki dolaplardan birinde olduðunu biliyorum. Aranmasý gereken çok fazla dolap var. Üstüneüstük kitliler. Açabilmem için bir alete ihtiyacým var. Belki 3. koridorda dolanýrken gördüðüm depodan bir þeyler çýkar. Aramaya koyulmalýyým.");
-        GameText tc_6 = new GameText(2003, "Arkadaþýndan Bir Not #4", "Hayýr olamaz! Bu katta hiç bir þey bulamadým. Üstelik her yer güvenliklerle dolu. Bir an önce alt kata gitmem gerekiyor.");
-        GameText tc_7 = new GameText(2004, "Arkadaþýndan Bir Not #5","Personelleri konuþurken duydum. Þanslýysam bu katta 2 anahtar bulabilirim. Konuþan Klozetin bahsettiði canlý kameralarýda gördüm. Görünmeden geçebileceðimi düþündüm, onlarý hafife aldým. Az kalsýn yakalanýyordum. Bu depoya saklandým. Bir alet gördüm. Biraz kurcalayýnca iþe yarar bir þey olduðunu anladým. Konuþan Klozetle bunu incelememiz ve ne iþe yaradýðýný öðrenmemiz gerek.");
-        GameText tc_8 = new GameText(2005, "Arkadaþýndan Bir Not #6", "Çýkýþý bulmak için dolaþtým fakat olduðum noktaya geri döndüm. Labirent gibi bir tasarýmý var. Personeller dört bir koldan dolaþýyor ve kritik noktalarý tutuyor. Acilen gizlenmem gerek...");
-        GameText tc_9 = new GameText(2006, "Arkadaþýndan Bir Not #7", "AMAN TANRIM! Bu okulda neler oluyor aklým almýyor. SINIFA GÝRDÝÐÝM ANDA BANA DÖNEN O BAKIÞLARDA NEYÝN NESÝYDÝ?!? Aklýmý kaçýrmak üzereyim. Bu katta yemekhane olduðunu öðrendim klozetten. Orayý hemen araþtýrýp anahtarý bulmak zorundayým. Orda olacaðýna inanýyorum...");
-        GameText tc_10 = new GameText(2007, "Arkadaþýndan Bir Not #8", "Kattaki odalarý araþtýrdým. Ancak anahtarý bir türlü bulamadým. Bir þey farkettim. Her odadan 2 adet var ve kütüphanelerden birini incelediðimde bu katýn krokisini gördüm...");
-        GameText tc_19 = new GameText(2008, "Arkadaþýndan Bir Not #9", "Gördüðüm kadarýyla, bazý bilmecelerle karþý karþýyayým. Doðru cevabýn beni çýkýþa doðru götüreceðine inanýyorum.");
-        GameText tc_20 = new GameText(2009, "Arkadaþýndan Bir Not #10", "");
+        GameText tc_2 = new GameText(2001, "Arkadaþýndan Bir Not #2", "Ýlk anahtarý buldum. Diðerlerini bulmak bu kadar kolay olacakmý bilmiyorum. Anahtarlara dair hiç bir ipucu yok. Yan odada bazý sesler duydum. Klozetten gidip bir bilgi almam gerek galiba.");
+        GameText tc_3 = new GameText(2002, "Arkadaþýndan Bir Not #3", "Olamaz iþim çok zor! Hangi sivrizekalý anahtarý öðrenci dolabýna koymayý akýl ederki? Neyse ki 2. koridorda ki dolaplardan birinde olduðunu biliyorum. Aranmasý gereken çok fazla dolap var. Üstüneüstük kitliler. Açabilmem için bir alete ihtiyacým var. Belki 3. koridorda dolanýrken gördüðüm depodan bir þeyler çýkar. Aramaya koyulmalýyým.");
+        GameText tc_4 = new GameText(2003, "Arkadaþýndan Bir Not #4", "Hayýr olamaz! Bu katta hiç bir þey bulamadým. Üstelik her yer güvenliklerle dolu. Bir an önce alt kata gitmem gerekiyor.");
+        GameText tc_5 = new GameText(2004, "Arkadaþýndan Bir Not #5","Personelleri konuþurken duydum. Þanslýysam bu katta 2 anahtar bulabilirim. Konuþan Klozetin bahsettiði canlý kameralarýda gördüm. Görünmeden geçebileceðimi düþündüm, onlarý hafife aldým. Az kalsýn yakalanýyordum. Bu depoya saklandým. Bir alet gördüm. Biraz kurcalayýnca iþe yarar bir þey olduðunu anladým. Konuþan Klozetle bunu incelememiz ve ne iþe yaradýðýný öðrenmemiz gerek.");
+        GameText tc_6 = new GameText(2005, "Arkadaþýndan Bir Not #6", "Çýkýþý bulmak için dolaþtým fakat olduðum noktaya geri döndüm. Labirent gibi bir tasarýmý var. Personeller dört bir koldan dolaþýyor ve kritik noktalarý tutuyor. Acilen gizlenmem gerek...");
+        GameText tc_7 = new GameText(2006, "Arkadaþýndan Bir Not #7", "AMAN TANRIM! Bu okulda neler oluyor aklým almýyor. SINIFA GÝRDÝÐÝM ANDA BANA DÖNEN O BAKIÞLARDA NEYÝN NESÝYDÝ?!? Aklýmý kaçýrmak üzereyim. Bu katta yemekhane olduðunu öðrendim klozetten. Orayý hemen araþtýrýp anahtarý bulmak zorundayým. Orda olacaðýna inanýyorum...");
+        GameText tc_8 = new GameText(2007, "Arkadaþýndan Bir Not #8", "Kattaki odalarý araþtýrdým. Ancak anahtarý bir türlü bulamadým. Bir þey farkettim. Her odadan 2 adet var ve kütüphanelerden birini incelediðimde bu katýn krokisini gördüm...");
+        GameText tc_9 = new GameText(2008, "Arkadaþýndan Bir Not #9", "Gördüðüm kadarýyla, bazý bilmecelerle karþý karþýyayým. Doðru cevabýn beni çýkýþa doðru götüreceðine inanýyorum.");
+        GameText tc_10 = new GameText(2009, "Arkadaþýndan Bir Not #10", "");
 
-        GameText tc_2 = new GameText(2010, "Güvenlik Anahtarý", "10. kat kütüphanesinde bulunan güvenlik anahtarý.");
-        GameText tc_4 = new GameText(2011, "Yedek merdiven kapý anahtarý", "10. kattan çýkýþý saðlar.");
+
+        
         MainStoryFriendTexts.Add(tc_1);
         MainStoryFriendTexts.Add(tc_2);
         MainStoryFriendTexts.Add(tc_3);
@@ -247,6 +251,128 @@ public class TextManager : MonoBehaviour
         MainStoryFriendTexts.Add(tc_8);
         MainStoryFriendTexts.Add(tc_9);
         MainStoryFriendTexts.Add(tc_10);
+    }
+    public void MainStoryKeyTextsInit()
+    {
+        GameText tc_1 = new GameText(2100, "Güvenlik Anahtarý", "10. kat kütüphanesinde bulunan güvenlik anahtarý.");
+        GameText tc_2 = new GameText(2101, "Güvenlik Anahtarý", "9. katta bulunan güvenlik anahtarý.");
+        GameText tc_3 = new GameText(2102, "Güvenlik Anahtarý", "8. katta bulunan güvenlik anahtarý.");
+        GameText tc_4 = new GameText(2103, "Güvenlik Anahtarý", "6. katta bulunan güvenlik anahtarý.");
+        GameText tc_5 = new GameText(2104, "Güvenlik Anahtarý", "6. katta bulunan güvenlik anahtarý.");
+        GameText tc_6 = new GameText(2105, "Güvenlik Anahtarý", "4. katta bulunan güvenlik anahtarý.");
+        GameText tc_7 = new GameText(2106, "Güvenlik Anahtarý", "3. katta bulunan güvenlik anahtarý.");
+        GameText tc_8 = new GameText(2107, "Güvenlik Anahtarý", "2. katta bulunan güvenlik anahtarý.");
+        GameText tc_9 = new GameText(2108, "Güvenlik Anahtarý", "2. katta bulunan güvenlik anahtarý.");
+        GameText tc_10 = new GameText(2109, "Güvenlik Anahtarý", "1. katta bulunan güvenlik anahtarý.");
+
+
+
+        GameText tc_11 = new GameText(4000, "Personel odasý anahtarý", "Personel odasý anahtarý.");
+        GameText tc_12 = new GameText(4001, "Yedek merdiven kapý anahtarý", "10. kattan çýkýþý saðlar.");
+
+        MainStoryKeyTexts.Add(tc_1);
+        MainStoryKeyTexts.Add(tc_2);
+        MainStoryKeyTexts.Add(tc_3);
+        MainStoryKeyTexts.Add(tc_4);
+        MainStoryKeyTexts.Add(tc_5);
+        MainStoryKeyTexts.Add(tc_6);
+        MainStoryKeyTexts.Add(tc_7);
+        MainStoryKeyTexts.Add(tc_8);
+        MainStoryKeyTexts.Add(tc_9);
+        MainStoryKeyTexts.Add(tc_10);
+
+        MainStoryKeyTexts.Add(tc_11);
+        MainStoryKeyTexts.Add(tc_12);
+    }
+    private void PuzzleOtherTextsInit()
+    {
+        GameText tc_1 = new GameText(3000, "Býçak", "Bir insaný ciddi þekilde yaralayabilir.");
+        GameText tc_2 = new GameText(3001, "Telsiz", "Güvenlik kamerasýný iptal eder.");
+        GameText tc_3 = new GameText(3002, "Crowbar", "Kilitli nesneleri açabilir.");
+
+        PuzzleOtherTexts.Add(tc_1);
+        PuzzleOtherTexts.Add(tc_2);
+        PuzzleOtherTexts.Add(tc_3);
+
+    }
+    private void PuzzlesTextsInit()
+    {
+        PuzzleMushroomTextsInit();
+        PuzzleAppleTextsInit();
+        PuzzleFlowerTextsInit();
+    }
+    private void PuzzleMushroomTextsInit()
+    {
+        GameText ic_500 = new GameText(1000, "3 Baþlý Mantar", "Zehirli olabilir.");
+        GameText ic_501 = new GameText(1001, "Dev Baþlý Mantar.", "Lezzetli bir mantar.");
+        GameText ic_502 = new GameText(1002, "Tüs Mantarý.", "Ýlaçlar için kullanýlýr.");
+        GameText ic_503 = new GameText(1005, "Tüs Mantarý.", "Ýlaçlar için kullanýlýr.");
+
+        PuzzlesTexts.Add(ic_500);
+        PuzzlesTexts.Add(ic_501);
+        PuzzlesTexts.Add(ic_502);
+        PuzzlesTexts.Add(ic_503);
+    }
+    private void PuzzleAppleTextsInit()
+    {
+
+    }
+    private void PuzzleFlowerTextsInit()
+    {
+        GameText ic_500 = new GameText(1003, "Tekli Lavanta", "Güzel kokar.");
+        GameText ic_501 = new GameText(1004, "Çoklu Lavanta", "Böceklerle çevrilidir.");
+
+        PuzzlesTexts.Add(ic_500);
+        PuzzlesTexts.Add(ic_501);
+    }
+    IEnumerator WaitAfterSpeakingEnding()
+    {
+        SetWaitSetup(true);
+        yield return new WaitForSeconds(0.5f);
+        UIManager.instance.SetActivationSpeakingPanel(false);
+        UIManager.instance.SetActivationGameTimePanel(true);
+        UIManager.instance.SetActivationMainMissionPanel(true);
+        if (currentStep == WhichStep.Step1)
+        {
+            AudioManager.instance.StartGameSource();
+            TimeManager.instance.StartGameTime();
+            currentStep = WhichStep.Step2;
+        }
+        else if (currentStep == WhichStep.Step2)
+        {
+            currentStep = WhichStep.Step3;
+        }
+        else if (currentStep == WhichStep.Step3)
+        {
+            currentStep = WhichStep.Step4;
+        }
+        else if (currentStep == WhichStep.Step4)
+        {
+            currentStep = WhichStep.Step5;
+        }
+        else if (currentStep == WhichStep.Step5)
+        {
+            currentStep = WhichStep.Step6;
+        }
+        else if (currentStep == WhichStep.Step6)
+        {
+            currentStep = WhichStep.Step7;
+        }
+        else if (currentStep == WhichStep.Step7)
+        {
+            currentStep = WhichStep.Step8;
+        }
+        if (currentStep != WhichStep.Step1 && currentStep != WhichStep.Step2)
+        {
+            PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(InteractPanelController.instance.GetClosetSpeakedCount(), PuzzleManager.instance.MissionComplateController.GetToiletMissionID(), ComplateType.ClosetSpeakingComplate);
+            Debug.Log("Klozet konusma görevi tamamlandi. ClosetSpeakedCount => " + InteractPanelController.instance.GetClosetSpeakedCount() + " MissionID => " + PuzzleManager.instance.MissionComplateController.GetToiletMissionID() + " Speaking Step => " + currentStep);
+            InteractPanelController.instance.IncreaseClosetSpeakedCount();
+
+        }        
+        PlayerManager.instance.PlayerUnlock();
+        GameManager.instance.SetAllToiletIsSepakingActivation(false);
+        
+        
     }
     public List<GameText> GetToiletTexts()
     {
@@ -261,7 +387,8 @@ public class TextManager : MonoBehaviour
         if (ToiletSpeakingTexts.Count > 0)
         {
             ToiletSpeakingTexts.Remove(ToiletSpeakingTexts[0]);
-        }        
+            currentTextString = ToiletSpeakingTexts[0].Text;
+        }
         if (ToiletSpeakingTexts.Count > 0)
         {
             Debug.Log("Before Text => " + _currentText.Text);
@@ -282,35 +409,25 @@ public class TextManager : MonoBehaviour
         }
         return new GameText(9999, "Null", "Text Sayisi Bitti.", WhosNext.Player, WhichStep.Step1);
     }
-    IEnumerator WaitAfterSpeakingEnding()
-    {        
-        yield return new WaitForSeconds(0.5f);
-        GameManager.instance.GetCurrentSchoolFloorManager().GetMyToilet().SetIsSpeaking(false);
-        if (currentStep == WhichStep.Step1)
-        {
-            PlayerManager.instance.PlayerUnlock();
-            UIManager.instance.SetActivationSpeakingPanel(false);
-            AudioManager.instance.StartGameSource();
-            TimeManager.instance.StartGameTime();
-            UIManager.instance.SetActivationMainMissionPanel(true);
-            currentStep = WhichStep.Step2;
-        }
-        else if (currentStep == WhichStep.Step2)
-        {
-
-        }
-        PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(InteractPanelController.instance.GetClosetSpeakedCount(), 3000, ComplateType.ClosetSpeakingComplate);        
+    public bool GetWaitSetup()
+    {
+        return _waitSetup;
+    }
+    public void SetWaitSetup(bool _go)
+    {
+        _waitSetup = _go;
     }
     public GameText GetCurrentText()
     {
         return _currentText;
     }
+    string currentTextString;
     public char GetTheNextLetter()
     {
-        if (_currentText != null && _currentText.Text.Length > 0)
+        if (_currentText != null && currentTextString.Length > 0)
         {
-            char nextLetter = _currentText.Text[0];
-            _currentText.Text = _currentText.Text.Substring(1);
+            char nextLetter = currentTextString[0];
+            currentTextString = currentTextString.Substring(1);
             return nextLetter;
         }
         return '\0';
@@ -318,6 +435,18 @@ public class TextManager : MonoBehaviour
     public GameText GetFriendTextWithID(int _id)
     {
         return MainStoryFriendTexts.Where(x => x.ID == _id).SingleOrDefault();
+    }
+    public GameText GetKeyTextWithID(int _id)
+    {
+        return MainStoryKeyTexts.Where(x => x.ID == _id).SingleOrDefault();
+    }
+    public GameText GetPuzzleOtherTextWithID(int _id)
+    {
+        return PuzzleOtherTexts.Where(x => x.ID == _id).SingleOrDefault();
+    }
+    public GameText GetPuzzlesTextsWithID(int _id)
+    {
+        return PuzzlesTexts.Where(x => x.ID == _id).SingleOrDefault();        
     }
 }
 [System.Serializable]

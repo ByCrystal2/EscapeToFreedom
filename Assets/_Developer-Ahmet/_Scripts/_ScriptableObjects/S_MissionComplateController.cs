@@ -9,19 +9,32 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
     private bool IsInventoryComplate;
     private bool[] FriendNoteComplate = { false, false, false, false, false, false, false, false, false, false };
     private bool[] SecurityKeyComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] PersonelKeyComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] StairKeyComplate = { false, false, false, false, false, false, false, false, false, false };
+    private bool[] NormalKeyComplate = { false, false, false, false, false, false, false, false, false, false };
     private bool[] FloorEnterComplate = { false, false, false, false, false, false, false, false, false, false };
     private bool[] ClosetSpeakingComplate = { false, false, false, false, false, false, false, false, false, false };
-
+    private bool[] CrowbarComplate = { false, false, false, false, false, false, false, false, false, false };
+    private List<int> toiletSpeakingMissionIDs = new List<int>();
     public void ResetComplateBools()
     {
         IsMoveComplate = false;
         IsRotateComplate = false;
         IsInventoryComplate = false;
         FriendNoteComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        //keys
         SecurityKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        PersonelKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        StairKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        NormalKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        //keys
         FloorEnterComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
         ClosetSpeakingComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
-}
+
+        //PuzzleOthers
+        CrowbarComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
+        //PuzzleOthers
+    }
 
     public void MoveMissionComplate()
     {
@@ -44,9 +57,9 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn)
             PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn = true;
     }
-    public void MainStoryMultipleMissionComplate(int _whichNumber, int _missionId, ComplateType _complateType)
+    public void MainStoryMultipleMissionComplate(int _whichNumber, int _missionId, ComplateType _complateType, KeyType _keyType = KeyType.None)
     {
-        if (PlayerManager.instance.player.IsBusy) return;
+        //if (PlayerManager.instance.player.IsBusy) return;
         switch (_complateType)
         {
             case ComplateType.FriendNoteComplate:
@@ -57,13 +70,47 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
                 }
                 FriendNoteComplate[_whichNumber] = true;
                 break;
-            case ComplateType.SecurityKeyComplate:
-                if (SecurityKeyComplate[_whichNumber])
+            case ComplateType.KeyComplate:
+                switch (_keyType)
                 {
-                    Debug.Log("Gorev zaten yapildi.");
-                    return;
+                    case KeyType.None:
+                        break;
+                    case KeyType.SecurityKey:
+                        if (SecurityKeyComplate[_whichNumber])
+                        {
+                            Debug.Log("Gorev zaten yapildi.");
+                            return;
+                        }
+                        SecurityKeyComplate[_whichNumber] = true;
+                        break;
+                    case KeyType.Personel:
+                        if (PersonelKeyComplate[_whichNumber])
+                        {
+                            Debug.Log("Gorev zaten yapildi.");
+                            return;
+                        }
+                        PersonelKeyComplate[_whichNumber] = true;
+                        break;
+                    case KeyType.StairDoor:
+                        if (StairKeyComplate[_whichNumber])
+                        {
+                            Debug.Log("Gorev zaten yapildi.");
+                            return;
+                        }
+                        StairKeyComplate[_whichNumber] = true;
+                        break;
+                    case KeyType.NormalDoor:
+                        if (NormalKeyComplate[_whichNumber])
+                        {
+                            Debug.Log("Gorev zaten yapildi.");
+                            return;
+                        }
+                        NormalKeyComplate[_whichNumber] = true;
+                        break;
+                    default:
+                        break;
                 }
-                SecurityKeyComplate[_whichNumber] = true;
+                
                 break;
             case ComplateType.FloorEnterComplate:
                 if (FloorEnterComplate[_whichNumber])
@@ -80,6 +127,15 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
                     return;
                 }
                 ClosetSpeakingComplate[_whichNumber] = true;
+                toiletSpeakingMissionIDs.RemoveAt(_whichNumber);
+                break;
+            case ComplateType.CrowbarComplate:
+                if (CrowbarComplate[_whichNumber])
+                {
+                    Debug.Log("Gorev zaten yapildi.");
+                    return;
+                }
+                CrowbarComplate[_whichNumber] = true;
                 break;
             default:
                 break;
@@ -88,7 +144,14 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(_missionId).ComplateToggle.isOn)
             PuzzleManager.instance.DesiredMainStoryMissionBehaviour(_missionId).ComplateToggle.isOn = true;
     }    
-    
+    public void SetToiletSpeakingIds(List<int> _toiletSpeakingIds)
+    {
+        toiletSpeakingMissionIDs = _toiletSpeakingIds;
+    }
+    public int GetToiletMissionID()
+    {
+        return toiletSpeakingMissionIDs[0];
+    }
     public bool GetIsMoveComplate()
     {
         return IsMoveComplate;
@@ -107,65 +170,36 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
 public enum ComplateType
 {
     FriendNoteComplate,
-    SecurityKeyComplate,
+    KeyComplate,
     FloorEnterComplate,
-    ClosetSpeakingComplate
+    ClosetSpeakingComplate,
+    CrowbarComplate
 }
 public partial class S_MissionComplateController : ScriptableObject //Puzzles Missions
 {
-    private bool Puzzle1_1;
-    private bool Puzzle1_2;
-    private bool Puzzle1_3;
-
+    private bool[] Puzzle1Complated = new bool[]
+    {
+        false,false,false
+    };
+    private int puzzle1ComplatedCount;
     public void PuzzleAndMissionID(int _pid, int _mid)
     {
-        if (_pid == 1)
+        if (_pid == 0)
         {
-            if (_mid == 1000)
-            {
-                Puzzle1_1Complate(_mid);
-            }
-            else if (_mid == 1001)
-            {
-                Puzzle1_2Complate(_mid);
-            }
-            else if (_mid == 1002)
-            {
-                Puzzle1_3Complate(_mid);
-            }
+            PuzzleComplate(_mid);
+            Puzzle1Complated[puzzle1ComplatedCount] = true;
+            puzzle1ComplatedCount++;
         }
     }
-    private void Puzzle1_1Complate(int _id)
+    private void PuzzleComplate(int _id)
     {
-        if (PlayerManager.instance.player.IsBusy) return;
-        Puzzle1_1 = true;
+        if (PlayerManager.instance.player.IsBusy) return;        
         if (!PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn)
             PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn = true;
-    }
-    private void Puzzle1_2Complate(int _id)
+    }   
+    public bool GetPuzzle1Complate(int _index)
     {
-        if (PlayerManager.instance.player.IsBusy) return;
-        Puzzle1_2 = true;
-        if (!PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn)
-            PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn = true;
+        return Puzzle1Complated[_index];
     }
-    private void Puzzle1_3Complate(int _id)
-    {
-        if (PlayerManager.instance.player.IsBusy) return;
-        Puzzle1_3 = true;
-        if (!PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn)
-            PuzzleManager.instance.DesiredPuzzleMissionBehaviour(_id).ComplateToggle.isOn = true;
-    }
-    public bool GetPuzzle1_1Complate()
-    {
-        return Puzzle1_1;
-    }
-    public bool GetPuzzle1_2Complate()
-    {
-        return Puzzle1_2;
-    }
-    public bool GetPuzzle1_3Complate()
-    {
-        return Puzzle1_3;
-    }
+    
 }

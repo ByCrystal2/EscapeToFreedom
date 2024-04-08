@@ -9,7 +9,13 @@ public class CollectPanelController : MonoBehaviour
     private CollectType _currentCollectableObject;
     private Collectable _currentCollectableBehaviour;
     private int collectedFrinedNoteCount;
-    private int collectedKeyCount;
+    private int collectedSecurityKeyCount;
+
+    private int collectedPersonelCount;
+    private int collectedStairDoorKeyCount;
+    private int collectedNormalDoorKeyCount;
+
+    private int collectedCrowbarCount;
     public static CollectPanelController instance { get; private set; }
     private void Awake()
     {
@@ -41,12 +47,74 @@ public class CollectPanelController : MonoBehaviour
     {
         collectedFrinedNoteCount++;
     }
-    public int GetCollectedKeyCount()
+    public int GetAndIncreaseDesiredKeyCount(KeyType _type)
     {
-        return collectedKeyCount;
+        int beforeCount = 0;
+        switch (_type)
+        {
+            case KeyType.None:
+                break;
+            case KeyType.SecurityKey:
+                beforeCount = GetCollectedSecurityKeyCount();
+                IncreaseCollectedSecurityKeyCount();
+                break;
+            case KeyType.Personel:
+                beforeCount = GetCollectedPersonelKeyCount();
+                IncreaseCollectedPersonelKeyCount();
+                break;
+            case KeyType.StairDoor:
+                beforeCount = GetCollectedStairDoorKeyCount();
+                IncreaseCollectedStairDoorKeyCount();
+                break;
+            case KeyType.NormalDoor:
+                beforeCount = GetCollectedNormalDoorKeyCount();
+                IncreaseCollectedNormalDoorKeyCount();
+                break;
+            default:
+                break;
+        }
+        return beforeCount;
     }
-    public void IncreaseCollectedKEyCount()
+    private int GetCollectedSecurityKeyCount()
     {
-        collectedKeyCount++;
+        return collectedSecurityKeyCount;
+    }
+    public void IncreaseCollectedSecurityKeyCount()
+    {
+        collectedSecurityKeyCount++;
+    }
+
+    private int GetCollectedPersonelKeyCount()
+    {
+        return collectedPersonelCount;
+    }
+    public void IncreaseCollectedPersonelKeyCount()
+    {
+        collectedPersonelCount++;
+    }
+    private int GetCollectedStairDoorKeyCount()
+    {
+        return collectedStairDoorKeyCount;
+    }
+    public void IncreaseCollectedStairDoorKeyCount()
+    {
+        collectedStairDoorKeyCount++;
+    }
+    private int GetCollectedNormalDoorKeyCount()
+    {
+        return collectedNormalDoorKeyCount;
+    }
+    public void IncreaseCollectedNormalDoorKeyCount()
+    {
+        collectedNormalDoorKeyCount++;
+    }
+
+    public int GetCollectedCrowbarCount()
+    {
+        return collectedNormalDoorKeyCount;
+    }
+    public void IncreaseCollectedCrowbarCount()
+    {
+        collectedNormalDoorKeyCount++;
     }
 }

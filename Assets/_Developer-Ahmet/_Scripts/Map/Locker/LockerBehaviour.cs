@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 [RequireComponent(typeof(Interactable))]
@@ -8,21 +9,25 @@ public class LockerBehaviour : MonoBehaviour
     public bool _isSerched;
     public bool _isEmpty = false;
     private bool _isBusy;
-    public List<ItemData> MyItems = new List<ItemData>();   
+    public List<int> MyItemsIDs = new List<int>();
     private void Awake()
     {
-        IsEmptyCalculate();
+        IsEmptyCalculate();        
     }
-    private bool GetIsEmpty()
+    private void Start()
     {
-        bool isEmpty = MyItems.Count <= 0 ? true : false;
+        
+    }
+    public bool GetIsEmpty()
+    {
+        bool isEmpty = MyItemsIDs.Count <= 0 ? true : false;
         return isEmpty;
     }
     public void IsEmptyCalculate()
     {
         if (GetIsEmpty()) _isEmpty = true;
         else _isEmpty = false;
-    }
+    }    
     public void InteractLocker()
     {
         if (_isBusy)

@@ -20,15 +20,22 @@ public class MissionBehaviour : MonoBehaviour
         {
             if (_value)
             {
-                Tween _dOMove = UIManager.instance.StartDOMoveMissionPanel();
-                _dOMove.OnUpdate(() =>
+                if (_missionType == MissionType.MainStory)
                 {
-                    // update
-                }).OnComplete(() => StartCoroutine(ComplateAndAddMissionCoroutine()));
-            }        
+                    Tween _dOMove = UIManager.instance.StartDOMoveMissionPanel();
+                    _dOMove.OnUpdate(() =>
+                    {
+                        // update
+                    }).OnComplete(() => StartCoroutine(ComplateAndAddMissionCoroutine()));
+                }
+                else if (_missionType == MissionType.Puzzle)
+                {
+                    StartCoroutine(ComplateAndAddMissionCoroutine());
+                }
+            }
         });
     }
-    
+
     public void SetBaseOptions()
     {
         if (MyMission != null)

@@ -238,19 +238,27 @@ public class UIManager : MonoBehaviour
     }
     Vector3 _missionPanelStartPos;
     Vector3 _missionPanelendPos;
-    public Tween StartDOMoveMissionPanel()
+    public Tween StartDOMoveMissionPanel(bool key_h = false)
     {
+        if (key_h)
+        {
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 3f);
+        }
         if (MainMissionsPanel.transform.position != _missionPanelendPos)
         {
-            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 2f);
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 3f);
         }
         return null;
     }
-    public Tween EndDOMoveMissionPanel()
+    public Tween EndDOMoveMissionPanel(bool key_h = false)
     {
+        if (key_h)
+        {
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelStartPos.x, 3f);
+        }
         if (MainMissionsPanel.transform.position != _missionPanelStartPos)
         {
-            return MainMissionsPanel.transform.DOMoveX(_missionPanelStartPos.x, 4f);
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelStartPos.x, 5f);
         }
         return null;
     }
@@ -278,6 +286,7 @@ public class UIManager : MonoBehaviour
         SetActivationCatchThePlayerPanel(false);
         PuzzleManager.instance.SetCurrentPuzzle(GameManager.instance.CurrentCathedPlayerPersonel);
         PuzzleManager.instance.AddMissionsInCurrentPuzzleContent();
+        GameManager.instance.CurrentCathedPlayerPersonel.SetIsCanCatchPlayer(false);
         PlayerManager.instance.PlayerUnlock();
         GameManager.instance.SetCursorLockMode(CursorLockMode.Locked);
     }

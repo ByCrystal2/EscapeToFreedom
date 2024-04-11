@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -21,10 +22,11 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 		bool _isInventoryActive = false;
+		bool _isMainPanelActive = false;
 		
         private void Update()
         {
-			if (Input.GetKeyDown(KeyCode.I) && !PlayerManager.instance.playerInventory._isBusy)
+			if (Input.GetKeyDown(KeyCode.I) && !PlayerManager.instance.playerInventory._isBusy)//envateri acar kapar
 			{
 				_isInventoryActive = !_isInventoryActive;
 				if (_isInventoryActive)
@@ -48,6 +50,25 @@ namespace StarterAssets
                 }
                 UIManager.instance.SetActivationInventoryPanel(_isInventoryActive);
             }
+			if (Input.GetKeyDown(KeyCode.U)) //maintstory panelini acar kapar
+			{
+				_isMainPanelActive = !_isMainPanelActive;
+				//Tween startTween;
+                if (_isMainPanelActive)
+				{
+					UIManager.instance.StartDOMoveMissionPanel(true);
+                    if (!PuzzleManager.instance.MissionComplateController.GetIsMainStoryKeyPressComplate())
+                    {
+                        PuzzleManager.instance.MissionComplateController.MainStoryPanelKeyPressMissionComplate();
+                    }
+                }
+				else
+				{
+                   UIManager.instance.EndDOMoveMissionPanel(true);
+                }
+				
+				
+			}
         }		
 #if ENABLE_INPUT_SYSTEM
         public void OnMove(InputValue value)

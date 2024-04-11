@@ -23,6 +23,7 @@ public class InteractPanelController : MonoBehaviour
     DoorBehavior _currentDoor;
     LockerBehaviour _currentLocker;
     MainToiletBehaviour _currentCloset;
+    PersonnelBehaviour _currentPersonnel;
     public DoorBehavior GetCurrentInteractedDoor()
     {
         return _currentDoor;
@@ -34,6 +35,10 @@ public class InteractPanelController : MonoBehaviour
     public MainToiletBehaviour GetCurrentInteractedCloset()
     {
         return _currentCloset;
+    }
+    public PersonnelBehaviour GetCurrentInteractedPersonnel()
+    {
+        return _currentPersonnel;
     }
     public void SetCurrentInteractionDoor(DoorBehavior _door)
     {
@@ -82,6 +87,21 @@ public class InteractPanelController : MonoBehaviour
             TxtInteract.text = "Görevini yap!";
         }
     }
+    public void SetCurrentInteractionPersonnel(PersonnelBehaviour _personnel)
+    {
+        InteractInputObj.SetActive(true);
+        _currentInteractableObject = InteractableType.Personnel;
+        _currentPersonnel = _personnel;
+        if (_currentPersonnel.Puzzle.AllIsMissionsComplated())
+        {
+            TxtInteract.text = "Teslim Et";
+        }
+        else
+        {
+            InteractInputObj.SetActive(false);
+            TxtInteract.text = "Görevini bitir!";
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && !PlayerManager.instance.player.IsBusy)
@@ -99,6 +119,13 @@ public class InteractPanelController : MonoBehaviour
                 if (_currentCloset.GetIsSpeaking())
                 {
                     _currentCloset.StartInteract();
+                }                
+            }
+            else if (_currentInteractableObject == InteractableType.Personnel)
+            {
+                if (_currentPersonnel.Puzzle.AllIsMissionsComplated())
+                {
+                    _currentPersonnel.StartInteract();
                 }                
             }
         }

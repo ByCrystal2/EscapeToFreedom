@@ -116,6 +116,18 @@ public class Collectable : MonoBehaviour, ICollectable
                 }
                 break;
             case CollectType.Flower:
+                if (GetIsCollected())//obje zaten toplanmissa islem yapma.
+                    break;
+                if (IsMainStoryMission)
+                {// main story.
+
+                }
+                else
+                {// puzzle.
+                    GameMission mission = PuzzleManager.instance.CurrentPuzzle.GetDesiredIDMisson(ItemDataID);
+                    PuzzleManager.instance.CurrentPuzzle.MissionComplate(mission);
+                    Debug.Log($"{_info.Title} isimli mantar toplandi. puzzleId => {PuzzleManager.instance.CurrentPuzzle.ID}  ItemID => {ItemDataID}");
+                }
                 break;
             case CollectType.Crowbar:
                 if (IsMainStoryMission && !GetIsCollected())
@@ -130,6 +142,18 @@ public class Collectable : MonoBehaviour, ICollectable
                 }
                 break;
             case CollectType.Book:
+                if (GetIsCollected())//obje zaten toplanmissa islem yapma.
+                    break;
+                if (IsMainStoryMission)
+                {// main story.
+
+                }
+                else
+                {// puzzle.
+                    GameMission mission = PuzzleManager.instance.CurrentPuzzle.GetDesiredIDMisson(ItemDataID);
+                    PuzzleManager.instance.CurrentPuzzle.MissionComplate(mission);
+                    Debug.Log($"{_info.Title} isimli mantar toplandi. puzzleId => {PuzzleManager.instance.CurrentPuzzle.ID}  ItemID => {ItemDataID}");
+                }
                 break;
             case CollectType.Knife:
                 break;

@@ -60,7 +60,7 @@ public class TimeManager : MonoBehaviour
             }
         }
     }
-    public void StartPuzzleTime(int totalSeconds, TextMeshProUGUI _text, Puzzle _puzzle = null, PersonnelBehaviour _currentPersonnel = null)
+    public void StartPuzzleTime(int totalSeconds,TextMeshProUGUI _text, Puzzle _puzzle = null, PersonnelBehaviour _currentPersonnel = null)
     {
         PuzzleTimeCoroutine = StartCoroutine(TimeControl(totalSeconds,_text,_puzzle,_currentPersonnel));
     }

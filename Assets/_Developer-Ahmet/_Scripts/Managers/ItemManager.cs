@@ -73,10 +73,17 @@ public class ItemManager : MonoBehaviour
         ItemData ic_501 = new ItemData(1001, "Dev Baþlý Mantar.", "Lezzetli bir mantar.", ItemType.Mushroom);
         ItemData ic_502 = new ItemData(1002, "Tüs Mantarý.", "Ýlaçlar için kullanýlýr.", ItemType.Mushroom);
         ItemData ic_505 = new ItemData(1005, "3 Baþlý Mantar", "Zehirli olabilir.", ItemType.Mushroom);
+        ItemData ic_508 = new ItemData(1008, "3 Mor Baþlý Mantar", "Zehir yapýmýnda kullanýlýr.", ItemType.Mushroom);
 
         // 2-) Flowers
         ItemData ic_503 = new ItemData(1003, "Tekli Lavanta", "Güzel kokar.", ItemType.Flower);
         ItemData ic_504 = new ItemData(1004, "Çoklu Lavanta", "Böceklerle çevrilidir.", ItemType.Flower);
+        ItemData ic_507 = new ItemData(1007, "Tekli Gül", "Güzelliði ile öne çýkar.", ItemType.Flower);
+
+        // 2-) Books
+        ItemData ic_506 = new ItemData(1006, "Avcýlýk Kitabý", "Ayýlar nasýl avlanýr?", ItemType.Book);
+        
+       
 
         _items.Add(ic_12);
         _items.Add(ic_13);
@@ -103,6 +110,9 @@ public class ItemManager : MonoBehaviour
         _items.Add(ic_503);
         _items.Add(ic_504);
         _items.Add(ic_505);
+        _items.Add(ic_506);
+        _items.Add(ic_507);
+        _items.Add(ic_508);
 
         _items.Add(ic_2);
         _items.Add(ic_3);

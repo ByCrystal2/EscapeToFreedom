@@ -7,6 +7,7 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
     private bool IsMoveComplate;
     private bool IsRotateComplate;
     private bool IsInventoryComplate;
+    private bool IsMainStoryKeyPressComplate;
     private bool[] FriendNoteComplate = { false, false, false, false, false, false, false, false, false, false };
     private bool[] SecurityKeyComplate = { false, false, false, false, false, false, false, false, false, false };
     private bool[] PersonelKeyComplate = { false, false, false, false, false, false, false, false, false, false };
@@ -21,6 +22,8 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         IsMoveComplate = false;
         IsRotateComplate = false;
         IsInventoryComplate = false;
+        IsMainStoryKeyPressComplate = false;
+
         FriendNoteComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
         //keys
         SecurityKeyComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
@@ -34,6 +37,11 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         //PuzzleOthers
         CrowbarComplate = new bool[] { false, false, false, false, false, false, false, false, false, false };
         //PuzzleOthers
+
+        //Puzzles
+        Puzzle1Complated = new bool[] { false, false, false, false};
+        puzzle1ComplatedCount = 0;
+        //Puzzles
     }
 
     public void MoveMissionComplate()
@@ -56,6 +64,13 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
         IsInventoryComplate = true;
         if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn)
             PuzzleManager.instance.DesiredMainStoryMissionBehaviour(3).ComplateToggle.isOn = true;
+    }
+    public void MainStoryPanelKeyPressMissionComplate()
+    {
+        if (PlayerManager.instance.player.IsBusy) return;
+        IsMainStoryKeyPressComplate = true;
+        if (!PuzzleManager.instance.DesiredMainStoryMissionBehaviour(4).ComplateToggle.isOn)
+            PuzzleManager.instance.DesiredMainStoryMissionBehaviour(4).ComplateToggle.isOn = true;
     }
     public void MainStoryMultipleMissionComplate(int _whichNumber, int _missionId, ComplateType _complateType, KeyType _keyType = KeyType.None)
     {
@@ -160,10 +175,13 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
     {
         return IsRotateComplate;
     }
-
     public bool GetIsInventoryComplate()
     {
         return IsInventoryComplate;
+    }
+    public bool GetIsMainStoryKeyPressComplate()
+    {
+        return IsMainStoryKeyPressComplate;
     }
 
 }
@@ -179,7 +197,7 @@ public partial class S_MissionComplateController : ScriptableObject //Puzzles Mi
 {
     private bool[] Puzzle1Complated = new bool[]
     {
-        false,false,false
+        false,false,false, false
     };
     private int puzzle1ComplatedCount;
     public void PuzzleAndMissionID(int _pid, int _mid)

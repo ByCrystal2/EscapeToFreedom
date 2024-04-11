@@ -300,6 +300,7 @@ public class TextManager : MonoBehaviour
         PuzzleMushroomTextsInit();
         PuzzleAppleTextsInit();
         PuzzleFlowerTextsInit();
+        PuzzleBookTextsInit();
     }
     private void PuzzleMushroomTextsInit()
     {
@@ -307,23 +308,32 @@ public class TextManager : MonoBehaviour
         GameText ic_501 = new GameText(1001, "Dev Baþlý Mantar.", "Lezzetli bir mantar.");
         GameText ic_502 = new GameText(1002, "Tüs Mantarý.", "Ýlaçlar için kullanýlýr.");
         GameText ic_503 = new GameText(1005, "Tüs Mantarý.", "Ýlaçlar için kullanýlýr.");
+        GameText ic_504 = new GameText(1008, "3 Mor Baþlý Mantar", "Zehir yapýmýnda kullanýlýr.");
 
         PuzzlesTexts.Add(ic_500);
         PuzzlesTexts.Add(ic_501);
         PuzzlesTexts.Add(ic_502);
         PuzzlesTexts.Add(ic_503);
+        PuzzlesTexts.Add(ic_504);
     }
     private void PuzzleAppleTextsInit()
     {
 
     }
+    private void PuzzleBookTextsInit()
+    {
+        GameText ic_500 = new GameText(1006, "Avcýlýk Kitabý", "Ayýlar nasýl avlanýr?");
+
+        PuzzlesTexts.Add(ic_500);
+    }
     private void PuzzleFlowerTextsInit()
     {
         GameText ic_500 = new GameText(1003, "Tekli Lavanta", "Güzel kokar.");
         GameText ic_501 = new GameText(1004, "Çoklu Lavanta", "Böceklerle çevrilidir.");
-
+        GameText ic_502 = new GameText(1007, "Tekli Gül", "Güzelliði ile öne çýkar.");
         PuzzlesTexts.Add(ic_500);
         PuzzlesTexts.Add(ic_501);
+        PuzzlesTexts.Add(ic_502);
     }
     IEnumerator WaitAfterSpeakingEnding()
     {

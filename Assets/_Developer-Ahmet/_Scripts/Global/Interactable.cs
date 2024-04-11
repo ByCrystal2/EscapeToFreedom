@@ -74,7 +74,7 @@ public class Interactable : MonoBehaviour, IInteractable
             PersonnelBehaviour myBehaviour = GetComponent<PersonnelBehaviour>();
             if (!myBehaviour.GetIsCanCatchPlayer())
             {
-                if (!myBehaviour.GetIsBusy())
+                if (!myBehaviour.GetIsBusy() && myBehaviour.Puzzle != null)
                 {
                     UIManager.instance.InteractPanelActivation(true);
                     myBehaviour.InteractPersonnel();

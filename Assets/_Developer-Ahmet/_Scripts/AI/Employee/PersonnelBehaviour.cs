@@ -47,7 +47,11 @@ public class PersonnelBehaviour : MonoBehaviour
         int random = Random.Range(0, 101);
         if (random <= 101) // BURASI %20 OLACAK! TEST AMACLÝ %100
         {
-            Puzzle = PuzzleManager.instance.GetRandomPuzzle(GetComponentInParent<SchoolFloorManager>().GetFloor());
+            Puzzle p = PuzzleManager.instance.GetRandomPuzzle(GetComponentInParent<SchoolFloorManager>().GetFloor());
+            if (p != null)
+            {
+                Puzzle = p;
+            }
         }
     }
     void Update()
@@ -169,6 +173,18 @@ public class PersonnelBehaviour : MonoBehaviour
     public void InteractPersonnel()
     {
         UIManager.instance.SetActivationCatchThePlayerPanel(false);
-        PuzzleManager.instance.CurrentPuzzle.MissionComplate(PuzzleManager.instance.CurrentPuzzle.GetDesiredIDMisson(7777));
+        if (isBusy)
+        {
+            if (UIManager.instance.GetInteractPanelActive())
+            {
+                UIManager.instance.InteractPanelActivation(false);
+            }
+            return;
+        }
+        InteractPanelController.instance.SetCurrentInteractionPersonnel(this);
+    }
+    public void StartInteract()
+    {
+        PuzzleManager.instance.MissionComplateController.PuzzleAndMissionID(PuzzleManager.instance.CurrentPuzzle.ID, 7777);
     }
 }

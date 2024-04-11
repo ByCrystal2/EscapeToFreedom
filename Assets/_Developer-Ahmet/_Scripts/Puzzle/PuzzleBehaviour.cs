@@ -12,6 +12,7 @@ public class PuzzleBehaviour : MonoBehaviour
     {
         if (_step == 0)
         {
+            txtHeader.text = _puzzle.Header;
             TimeManager.instance.StartPuzzleTime(_puzzle.TimeInterval, txtTime, _puzzle,GameManager.instance.CurrentCathedPlayerPersonel);
             UIManager.instance.StartDOMovePuzzlePanel();
         }

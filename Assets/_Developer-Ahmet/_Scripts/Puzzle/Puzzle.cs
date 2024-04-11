@@ -62,6 +62,7 @@ public class Puzzle
         bool allComplate = true;
         for (int i = 0; i < length; i++)
         {
+            if (Missions[i].ID == 7777) break;
             if (!Missions[i].GetIsComplate())
             {
                 allComplate = false;

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 6500000}
+  - component: {fileID: 3713640447240173706}
+  - component: {fileID: 8854875119001072973}
   m_Layer: 20
   m_Name: toilet1
   m_TagString: Untagged
@@ -106,6 +108,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.419011, y: 0.22604597, z: 0.2384299}
   m_Center: {x: 0.00001642853, y: 0.0035135709, z: -0.120711565}
+--- !u!114 &3713640447240173706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8700991887115ed469825984eac70184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactableType: 3
+  IsLocked: 1
+--- !u!114 &8854875119001072973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f9c5123449b5c4e9445c60939532d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speakingEnd: 1
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0

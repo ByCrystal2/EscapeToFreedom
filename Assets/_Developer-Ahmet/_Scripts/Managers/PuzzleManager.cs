@@ -128,11 +128,13 @@ public class PuzzleManager : MonoBehaviour
         GameMission gm1 = new GameMission(1, "Ana Görev 1", "Hareket Et. (W-A-S-D)", MissionLevel.Easy);
         GameMission gm2 = new GameMission(2, "Ana Görev 2", "Saða-Sola Bak. (Mouse Rotate)", MissionLevel.Easy);
         GameMission gm3 = new GameMission(3, "Ana Görev 3", "Envanterini Aç. (I)", MissionLevel.Easy);
+        GameMission gm4 = new GameMission(4, "Ana Görev 4", "MainStroy Panelini Getir.(U)", MissionLevel.Easy);
         // 3 gorev basarili bir sekilde yapildiktan sonra tuvallete ki kagidi bul gorevi geliyor.
         
         MainStoryMissions.Add(gm1);
         MainStoryMissions.Add(gm2);
         MainStoryMissions.Add(gm3);
+        MainStoryMissions.Add(gm4);
         ClearMainStoryContent();
         ReloadMissionsInMaintStoryContent(); //
         AddToiletSpeakingMissionIds();
@@ -163,15 +165,25 @@ public class PuzzleManager : MonoBehaviour
 
         //p-3
         List<GameMission> Puzzle1Missions2 = new List<GameMission>();
-        GameMission pgm7 = new GameMission(1006, "8. Kat Gorevi", "Erkekler tuvaletinde ki lavantayý al!", MissionLevel.Medium);
-        GameMission pgm8 = new GameMission(1007, "8. Kat Gorevi", "Depoda ki lavantalarý bul!", MissionLevel.Medium);
-        GameMission pgm9 = new GameMission(1008, "8. Kat Gorevi", "Depoda ki mantarý al!", MissionLevel.Medium);
+        GameMission pgm7 = new GameMission(1006, "8. Kat Gorevi", "Üç yol noktasýnda ki kitabý al!", MissionLevel.Medium);
+        GameMission pgm8 = new GameMission(1007, "8. Kat Gorevi", "Koridor köþesinde ki çiçeði al!", MissionLevel.Medium);
+        GameMission pgm9 = new GameMission(1008, "8. Kat Gorevi", "Kat giriþinde ki mantarý al!", MissionLevel.Medium);
         Puzzle1Missions.Add(pgm7);
         Puzzle1Missions.Add(pgm8);
         Puzzle1Missions.Add(pgm9);
-        Puzzle p3 = new Puzzle(1, "Lavanta kokusu", 350, Puzzle1Missions2, MissionLevel.Easy, SchoolFloor.NinthFloor);
+        Puzzle p3 = new Puzzle(2, "Kitap kokusu", 350, Puzzle1Missions2, MissionLevel.Easy, SchoolFloor.EighthFloor);
         Puzzles.Add(p3);
 
+        //p-4
+        List<GameMission> Puzzle1Missions3 = new List<GameMission>();
+        GameMission pgm10 = new GameMission(1009, "7. Kat Gorevi", "Üç yol noktasýnda ki kitabý al!", MissionLevel.Medium);
+        GameMission pgm11 = new GameMission(1010, "7. Kat Gorevi", "Koridor köþesinde ki çiçeði al!", MissionLevel.Medium);
+        GameMission pgm12 = new GameMission(1011, "7. Kat Gorevi", "Kat giriþinde ki mantarý al!", MissionLevel.Medium);
+        Puzzle1Missions.Add(pgm10);
+        Puzzle1Missions.Add(pgm11);
+        Puzzle1Missions.Add(pgm12);
+        Puzzle p4 = new Puzzle(3, "Kitap kokusu", 350, Puzzle1Missions3, MissionLevel.Easy, SchoolFloor.SeventhFloor);
+        Puzzles.Add(p4);
     }
     public MissionBehaviour DesiredMainStoryMissionBehaviour(int _id)
     {
@@ -292,181 +304,181 @@ public class PuzzleManager : MonoBehaviour
     {
         switch (_id)
         {
-            case 3:
+            case 4:
                 GameMission gm4 = new GameMission(2000, "Ana Görev 1", "Tuvallete ki notu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm4);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(0);
                 break;
-            case 4:
+            case 5:
                 GameMission gm34 = new GameMission(2500, "Ana Görev 1", "Konuþan Klozeti bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm34);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 5:
+            case 6:
                 GameMission gm5 = new GameMission(2100, "Ana Görev 2", "Kütüphanede ki güvenlik anahtarýný bul.", MissionLevel.Easy);                
                 AddMissionInMainStoryContent(gm5);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(1);
                 break;
-            case 6:
+            case 7:
                 GameMission gm42 = new GameMission(2001, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm42);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(2);
                 break;
-            case 7:
+            case 8:
                 GameMission gm6 = new GameMission(2501, "Ana Görev 2", "Konuþan Klozeti bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm6);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 8:
+            case 9:
                 GameMission gm7 = new GameMission(4000, "Ana Görev 2", "Kamera odasýnda ki personel odasý anahtarýný al.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm7);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(3);
                 break;
-            case 9:
+            case 10:
                 GameMission gm8 = new GameMission(4001, "Ana Görev 2", "Personel odasýna git ve kapý anahtarýný bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm8);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(4);
                 break;            
-            case 10:
+            case 11:
                 GameMission gm9 = new GameMission(2800, "Ana Görev 2", "9. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm9);
                 break;
-            case 11:
+            case 12:
                 GameMission gm35 = new GameMission(2002, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm35);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(5);
                 break;
-            case 12:
+            case 13:
                 GameMission gm10 = new GameMission(3002, "Ana Görev 2", "3. Koridorda ki Depoyu bul", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm10);
                 break;
-            case 13:
+            case 14:
                 GameMission gm11 = new GameMission(2101, "Ana Görev 2", "2. Koridorda GÜVENLÝK ANAHTARI'ný bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm11);
                 // NOT: Bu anahtar 2. koridorda ki locker icerisinde bulunmaktadir.
                 break;
-            case 14:
+            case 15:
                 GameMission gm12 = new GameMission(2801, "Ana Görev 2", "8. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm12);
                 break;
-            case 15:
+            case 16:
                 GameMission gm13 = new GameMission(2502, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm13);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 16:
+            case 17:
                 GameMission gm14 = new GameMission(2102, "Ana Görev 2", "Garip odada ki anahtarý bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm14);
                 //NOT: Bu anahtar mouse roomda ki locker icerisinde bulunmaktadir.
                 break;
-            case 17:
+            case 18:
                 GameMission gm15 = new GameMission(2802, "Ana Görev 2", "7. Kata in", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm15);
                 break;
-            case 18:
+            case 19:
                 GameMission gm16 = new GameMission(2003, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm16);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(6);
                 break;
-            case 19:
+            case 20:
                 GameMission gm17 = new GameMission(2803, "Ana Görev 2", "6. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm17);
                 break;
-            case 20:
+            case 21:
                 GameMission gm18 = new GameMission(2503, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm18);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 21:
+            case 22:
                 GameMission gm19 = new GameMission(2004, "Ana Görev 2", "Depo'da ki arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm19);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(7);
                 break;
-            case 22:
+            case 23:
                 GameMission gm20 = new GameMission(2504, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm20);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 23:
+            case 24:
                 GameMission gm21 = new GameMission(2103, "Ana Görev 2", "Güvenlik Anahtarý'ný bul #1.", MissionLevel.Easy);
                 GameMission gm22 = new GameMission(2104, "Ana Görev 2", "Güvenlik Anahtarý'ný bul #2.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm21);
                 AddMissionInMainStoryContent(gm22);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(8);
                 break;
-            case 24:
+            case 25:
                 GameMission gm36 = new GameMission(2804, "Ana Görev 2", "5. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm36);
                 break;
-            case 25:
+            case 26:
                 GameMission gm37= new GameMission(2005, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm37);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(9);
                 break;
-            case 26:
+            case 27:
                 GameMission gm38 = new GameMission(2805, "Ana Görev 2", "4. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm38);
                 break;
-            case 27:
+            case 28:
                 GameMission gm23 = new GameMission(2505, "Ana Görev 2", "Konuþan Klozet'i bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm23);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 28:
+            case 29:
                 GameMission gm24 = new GameMission(2006, "Ana Görev 2", "Arkadaþýnýn sýnýfýna git ve notunu bul", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm24);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(10);                
                 break;
-            case 29:
+            case 30:
                 GameMission gm25 = new GameMission(2105, "Ana Görev 2", "Güvenlik Anahtarý'ný bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm25);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(11);
                 break;
-            case 30:
+            case 31:
                 GameMission gm26 = new GameMission(2806, "Ana Görev 2", "3. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm26);
                 break;
-            case 31:
+            case 32:
                 GameMission gm27 = new GameMission(2007, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm27);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(12);
                 break;
-            case 32:
+            case 33:
                 GameMission gm28 = new GameMission(2106, "Ana Görev 2", "Güvenlik anahtarýný bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm28);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(13);
                 break;
-            case 33:
+            case 34:
                 GameMission gm29 = new GameMission(2807, "Ana Görev 2", "2. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm29);
                 break;
-            case 34:
+            case 35:
                 GameMission gm39 = new GameMission(2506, "Ana Görev 2", "Konuþan Klozeti bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm39);
                 GameManager.instance.SetAllToiletIsSepakingActivation(true);
                 break;
-            case 35:
+            case 36:
                 GameMission gm30 = new GameMission(2008, "Ana Görev 2", "Arkadaþýnýn notunu bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm30);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(14);
                 break;
-            case 36:
+            case 37:
                 GameMission gm31 = new GameMission(2107, "Ana Görev 2", "Güvenlik anahtarýný bul. #1", MissionLevel.Easy);
                 GameMission gm32 = new GameMission(2108, "Ana Görev 2", "Güvenlik anahtarýný bul. #2", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm31);
                 AddMissionInMainStoryContent(gm32);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(15);
                 break;
-            case 37:
+            case 38:
                 GameMission gm40 = new GameMission(2808, "Ana Görev 2", "1. Kata in.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm40);                
                 break;
-            case 38:
+            case 39:
                 GameMission gm43 = new GameMission(2009, "Ana Görev 2", "Arkadaþýnýn notunu al.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm43);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(16);
                 break;
-            case 39:
+            case 40:
                 GameMission gm41 = new GameMission(2109, "Ana Görev 2", "Güvenlik anahtarýný bul.", MissionLevel.Easy);
                 AddMissionInMainStoryContent(gm41);
                 MissionsManager.instance.ActivationDesiredMainStoryMission(17);
@@ -536,7 +548,6 @@ public class PuzzleManager : MonoBehaviour
                     CurrentPuzzle.AddMission(deliveredMission);
                     AddMissionsInCurrentPuzzleContent();
                     CurrentPuzzle.SetIsDelivered(true);
-                    PuzzleManager.instance.CurrentPuzzleOwningPersonel.SetIsCanCatchPlayer(false);
                 }
 
             }
@@ -603,7 +614,14 @@ public class PuzzleManager : MonoBehaviour
     public Puzzle GetRandomPuzzle(SchoolFloor _currentFloor)
     {
         List<Puzzle> _targetPuzzles = Puzzles.Where(x => x.TargetFloor == _currentFloor).ToList();
-        return _targetPuzzles[Random.Range(0, _targetPuzzles.Count)];
+        if (_targetPuzzles.Count > 0)
+            return _targetPuzzles[Random.Range(0, _targetPuzzles.Count)];
+        else
+        {
+            Debug.Log("Bu katta puzzle bulunmamaktadir. => " + _currentFloor);
+            return null;
+        }
+        
     }
 }
 public enum MissionType

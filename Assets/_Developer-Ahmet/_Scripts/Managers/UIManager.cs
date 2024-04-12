@@ -246,7 +246,7 @@ public class UIManager : MonoBehaviour
         }
         if (MainMissionsPanel.transform.position != _missionPanelendPos)
         {
-            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 3f);
+            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelendPos.x, 4f);
         }
         return null;
     }
@@ -258,7 +258,7 @@ public class UIManager : MonoBehaviour
         }
         if (MainMissionsPanel.transform.position != _missionPanelStartPos)
         {
-            return MainMissionsPanel.transform.DOLocalMoveX(_missionPanelStartPos.x, 5f);
+            return MainMissionsPanel.transform.DOMoveX(_missionPanelStartPos.x, 5f);
         }
         return null;
     }
@@ -285,6 +285,7 @@ public class UIManager : MonoBehaviour
         GameManager.instance.CurrentCatchedPersonnelWorkAndMoveOn(true);
         SetActivationCatchThePlayerPanel(false);
         PuzzleManager.instance.SetCurrentPuzzle(GameManager.instance.CurrentCathedPlayerPersonel);
+        PuzzleManager.instance.ClearPuzzleContent();
         PuzzleManager.instance.AddMissionsInCurrentPuzzleContent();
         GameManager.instance.CurrentCathedPlayerPersonel.SetIsCanCatchPlayer(false);
         PlayerManager.instance.PlayerUnlock();

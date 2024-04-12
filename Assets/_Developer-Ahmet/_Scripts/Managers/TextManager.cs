@@ -374,8 +374,8 @@ public class TextManager : MonoBehaviour
         }
         if (currentStep != WhichStep.Step1 && currentStep != WhichStep.Step2)
         {
-            PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(InteractPanelController.instance.GetClosetSpeakedCount(), PuzzleManager.instance.MissionComplateController.GetToiletMissionID(), ComplateType.ClosetSpeakingComplate);
-            Debug.Log("Klozet konusma görevi tamamlandi. ClosetSpeakedCount => " + InteractPanelController.instance.GetClosetSpeakedCount() + " MissionID => " + PuzzleManager.instance.MissionComplateController.GetToiletMissionID() + " Speaking Step => " + currentStep);
+            PuzzleManager.instance.MissionComplateController.MainStoryMultipleMissionComplate(InteractPanelController.instance.GetClosetSpeakedCount(), PuzzleManager.instance.MissionComplateController.GetToiletMissionID(InteractPanelController.instance.GetClosetSpeakedCount()), ComplateType.ClosetSpeakingComplate);
+            Debug.Log("Klozet konusma görevi tamamlandi. ClosetSpeakedCount => " + InteractPanelController.instance.GetClosetSpeakedCount() + " MissionID => " + PuzzleManager.instance.MissionComplateController.GetToiletMissionID(InteractPanelController.instance.GetClosetSpeakedCount()) + " Speaking Step => " + currentStep);
             InteractPanelController.instance.IncreaseClosetSpeakedCount();
 
         }        
@@ -401,9 +401,7 @@ public class TextManager : MonoBehaviour
         }
         if (ToiletSpeakingTexts.Count > 0)
         {
-            Debug.Log("Before Text => " + _currentText.Text);
             _currentText = ToiletSpeakingTexts[0];
-            Debug.Log("After Text => " + _currentText.Text);
             if (currentStep != _currentText.Step)
             {
                 StartCoroutine(WaitAfterSpeakingEnding());

@@ -157,9 +157,9 @@ public class PuzzleManager : MonoBehaviour
         GameMission pgm4 = new GameMission(1003, "9. Kat Gorevi", "Erkekler tuvaletinde ki lavantayý al!", MissionLevel.Medium);
         GameMission pgm5 = new GameMission(1004, "9. Kat Gorevi", "Depoda ki lavantalarý bul!", MissionLevel.Medium);
         GameMission pgm6 = new GameMission(1005, "9. Kat Gorevi", "Depoda ki mantarý al!", MissionLevel.Medium);
-        Puzzle1Missions.Add(pgm4);
-        Puzzle1Missions.Add(pgm5);
-        Puzzle1Missions.Add(pgm6);        
+        Puzzle1Missions1.Add(pgm4);
+        Puzzle1Missions1.Add(pgm5);
+        Puzzle1Missions1.Add(pgm6);        
         Puzzle p2 = new Puzzle(1, "Lavanta kokusu", 350, Puzzle1Missions1, MissionLevel.Easy, SchoolFloor.NinthFloor);
         Puzzles.Add(p2);
 
@@ -168,9 +168,9 @@ public class PuzzleManager : MonoBehaviour
         GameMission pgm7 = new GameMission(1006, "8. Kat Gorevi", "Üç yol noktasýnda ki kitabý al!", MissionLevel.Medium);
         GameMission pgm8 = new GameMission(1007, "8. Kat Gorevi", "Koridor köþesinde ki çiçeði al!", MissionLevel.Medium);
         GameMission pgm9 = new GameMission(1008, "8. Kat Gorevi", "Kat giriþinde ki mantarý al!", MissionLevel.Medium);
-        Puzzle1Missions.Add(pgm7);
-        Puzzle1Missions.Add(pgm8);
-        Puzzle1Missions.Add(pgm9);
+        Puzzle1Missions2.Add(pgm7);
+        Puzzle1Missions2.Add(pgm8);
+        Puzzle1Missions2.Add(pgm9);
         Puzzle p3 = new Puzzle(2, "Kitap kokusu", 350, Puzzle1Missions2, MissionLevel.Easy, SchoolFloor.EighthFloor);
         Puzzles.Add(p3);
 
@@ -179,9 +179,9 @@ public class PuzzleManager : MonoBehaviour
         GameMission pgm10 = new GameMission(1009, "7. Kat Gorevi", "Üç yol noktasýnda ki kitabý al!", MissionLevel.Medium);
         GameMission pgm11 = new GameMission(1010, "7. Kat Gorevi", "Koridor köþesinde ki çiçeði al!", MissionLevel.Medium);
         GameMission pgm12 = new GameMission(1011, "7. Kat Gorevi", "Kat giriþinde ki mantarý al!", MissionLevel.Medium);
-        Puzzle1Missions.Add(pgm10);
-        Puzzle1Missions.Add(pgm11);
-        Puzzle1Missions.Add(pgm12);
+        Puzzle1Missions3.Add(pgm10);
+        Puzzle1Missions3.Add(pgm11);
+        Puzzle1Missions3.Add(pgm12);
         Puzzle p4 = new Puzzle(3, "Kitap kokusu", 350, Puzzle1Missions3, MissionLevel.Easy, SchoolFloor.SeventhFloor);
         Puzzles.Add(p4);
     }
@@ -622,6 +622,18 @@ public class PuzzleManager : MonoBehaviour
             return null;
         }
         
+    }
+    public Puzzle GetRandomPuzzle(int _currentFloor)
+    {
+        List<Puzzle> _targetPuzzles = Puzzles.Where(x => (int)x.TargetFloor == _currentFloor).ToList();
+        if (_targetPuzzles.Count > 0)
+            return _targetPuzzles[Random.Range(0, _targetPuzzles.Count)];
+        else
+        {
+            Debug.Log("Bu katta puzzle bulunmamaktadir. => " + _currentFloor);
+            return null;
+        }
+
     }
 }
 public enum MissionType

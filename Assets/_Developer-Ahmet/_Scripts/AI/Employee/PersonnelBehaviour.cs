@@ -47,7 +47,8 @@ public class PersonnelBehaviour : MonoBehaviour
         int random = Random.Range(0, 101);
         if (random <= 101) // BURASI %20 OLACAK! TEST AMACLÝ %100
         {
-            Puzzle p = PuzzleManager.instance.GetRandomPuzzle(GetComponentInParent<SchoolFloorManager>().GetFloor());
+            int currentFloor = (int)GetComponentInParent<SchoolFloorManager>().GetFloor();            
+            Puzzle p = PuzzleManager.instance.GetRandomPuzzle(currentFloor - 1);
             if (p != null)
             {
                 Puzzle = p;

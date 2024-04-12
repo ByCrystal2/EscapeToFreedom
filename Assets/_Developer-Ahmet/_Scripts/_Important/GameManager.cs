@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
 }
 public enum SchoolFloor
 {
-    FirstFloor,
+    FirstFloor = 1,
     SecondFloor,
     ThirdFloor,
     FourthFloor,

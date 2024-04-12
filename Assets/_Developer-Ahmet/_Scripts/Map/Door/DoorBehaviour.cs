@@ -101,14 +101,12 @@ public class DoorBehavior : MonoBehaviour
                 if (_doorDirection == Direction.North || _doorDirection == Direction.South)
                 {
                     _otherDoor.transform.rotation = Quaternion.Slerp(_otherStartRotation, new Quaternion(_otherEndRotation.x, -_otherEndRotation.y, _otherEndRotation.z, _otherEndRotation.w), t);
-                    Debug.Log("_endRotation => " + _otherEndRotation + " _endRotation.y => " + _otherEndRotation.y);
                     //_otherDoor.transform.rotation = Quaternion.Slerp(_startRotation, _endRotation, t);
                 }
                 else if(_doorDirection == Direction.East || _doorDirection == Direction.West)
                 {
                     _otherDoor.transform.rotation = Quaternion.Slerp(_otherStartRotation, new Quaternion(_otherEndRotation.x, -_otherEndRotation.y, _otherEndRotation.z, _otherEndRotation.w), t);
                     //_otherDoor.transform.rotation = Quaternion.Slerp(_startRotation, _endRotation, t);
-                    Debug.Log("_endRotation => " + _otherEndRotation + " _endRotation.y => " + _otherEndRotation.y);
                 }
                 
             }

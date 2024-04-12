@@ -142,7 +142,7 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
                     return;
                 }
                 ClosetSpeakingComplate[_whichNumber] = true;
-                toiletSpeakingMissionIDs.RemoveAt(_whichNumber);
+                //toiletSpeakingMissionIDs.Remove(_missionId);
                 break;
             case ComplateType.CrowbarComplate:
                 if (CrowbarComplate[_whichNumber])
@@ -163,9 +163,9 @@ public partial class S_MissionComplateController : ScriptableObject // Main Stor
     {
         toiletSpeakingMissionIDs = _toiletSpeakingIds;
     }
-    public int GetToiletMissionID()
+    public int GetToiletMissionID(int _index)
     {
-        return toiletSpeakingMissionIDs[0];
+        return toiletSpeakingMissionIDs[_index];
     }
     public bool GetIsMoveComplate()
     {

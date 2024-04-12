@@ -127,7 +127,6 @@ public class InventoryPanelController : MonoBehaviour
         {
             if (_inventoryContent.GetChild(i).TryGetComponent(out InventorySlotObj _slot))
             {
-                Debug.Log("_slot => " + _slot.gameObject.name + " isFull => " + _slot.GetIsFull());
                 if (!_slot.GetIsFull())
                 {
                     _slot.SetIsFull(true);

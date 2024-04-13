@@ -53,6 +53,7 @@ public class Personnel : Employee
                 if (!UIManager.instance.GetCatchThePlayerPanelActive())
                 {
                     Debug.Log("CathThePLayerPanel Aciliyor...");
+                    AudioManager.instance.PlayPersonnelSound(true, PersonnelSoundType.ISeeYou);
                     UIManager.instance.SetActivationCatchThePlayerPanel(true, behaviour.Puzzle != null);
                     PlayerManager.instance.PlayerLock();
                     GameManager.instance.SetCursorLockMode(CursorLockMode.Confined);

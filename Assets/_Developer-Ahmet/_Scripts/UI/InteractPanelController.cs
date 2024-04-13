@@ -113,6 +113,7 @@ public class InteractPanelController : MonoBehaviour
             else if (_currentInteractableObject == InteractableType.Locker)
             {
                 _currentLocker.StartInteract();
+                AudioManager.instance.PlayOneShotLockOpen();
             }
             else if (_currentInteractableObject == InteractableType.Closet)
             {

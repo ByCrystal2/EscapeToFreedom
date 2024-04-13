@@ -60,6 +60,7 @@ public class PersonnelBehaviour : MonoBehaviour
         float _playerTargetDistance = Vector3.Distance(transform.position, PlayerManager.instance.player.transform.position);
         if (_playerTargetDistance <= PlayerTargetDistance && isCanCathPlayer)
         {
+            AudioManager.instance.PlayPersonnelSound(true, PersonnelSoundType.ISeeYou);
             Me.EmployeeState = EmployeeState.Chasing;
             anim.SetBool("Run", true);
             _targetPosition = PlayerManager.instance.player.transform;
@@ -162,6 +163,7 @@ public class PersonnelBehaviour : MonoBehaviour
     public void KillMe()
     {
         Destroy(gameObject);
+        AudioManager.instance.PlayPersonnelSound(true, PersonnelSoundType.Death);
     }
     public Personnel GetMe()
     {

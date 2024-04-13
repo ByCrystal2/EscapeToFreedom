@@ -167,6 +167,7 @@ public class Collectable : MonoBehaviour, ICollectable
         PlayerManager.instance.playerInventory.AddCollectedItem(this);
         gameObject.SetActive(false);
         SetIsCollected(true);
+        AudioManager.instance.PlayCollectableSound(true, _collectableType);
     }
     public void SetIsCollected(bool _isCollected)
     {

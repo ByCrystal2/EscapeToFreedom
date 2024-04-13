@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Interactable))]
@@ -17,6 +18,8 @@ public class DoorBehavior : MonoBehaviour
     DoorBehavior _otherDoor;
 
     [SerializeField] public bool isEndGameDoor = false;
+
+    bool isHaveDoorOpeningSound; // %50 ihtimal
     void Start()
     {
         _startRotation = transform.rotation;
@@ -36,7 +39,7 @@ public class DoorBehavior : MonoBehaviour
                 }
             }
         }
-        
+        isHaveDoorOpeningSound = Random.Range(0,101) < 50 ? true : false;
     }
 
     // Update is called once per frame
@@ -71,9 +74,14 @@ public class DoorBehavior : MonoBehaviour
     }
     IEnumerator OpenDoor()
     {
+        if (isHaveDoorOpeningSound)
+        {
+            AudioManager.instance.PlayOneShotDoorCreaking();
+        }
         if (_isMouseRoomDoor)
         {
             GetComponentInParent<SchoolClassManager>().MousesActive(true);
+            AudioManager.instance.PlayOrStopMouseRoom(true);
         }
         _isBusy = true;
         if (_otherDoor != null)
@@ -128,6 +136,10 @@ public class DoorBehavior : MonoBehaviour
     }
     IEnumerator CloseDoor()
     {
+        if (isHaveDoorOpeningSound)
+        {
+            AudioManager.instance.PlayOneShotDoorCreaking();
+        }
         _isBusy = true;
         if (_otherDoor != null)
         {
@@ -168,6 +180,7 @@ public class DoorBehavior : MonoBehaviour
         if (_isMouseRoomDoor)
         {
             GetComponentInParent<SchoolClassManager>().MousesActive(false);
+            AudioManager.instance.PlayOrStopMouseRoom(false);
         }
     }
 }

@@ -118,13 +118,10 @@ public class AudioManager : MonoBehaviour
     {
         if (_play)
         {
-            AllAudioStop(true);
-            MouseRoomSource.clip = MouseRoomSound;
-            MouseRoomSource.DOPlayBackwards();
+            MouseRoomSource.PlayOneShot(MouseRoomSound);
         }
         else
         {
-            AllAudioStop(false);
             MouseRoomSource.Stop();
         }
         
@@ -195,7 +192,8 @@ public class AudioManager : MonoBehaviour
             int length = allSources.Length;
             for (int i = 0; i < length; i++)
             {
-                allSources[i].transform.GetChild(i).gameObject.SetActive(false);
+                if (allSources[i] == MouseRoomSource) continue;                
+                allSources[i].gameObject.SetActive(false);
             }
         }
         else
@@ -204,7 +202,7 @@ public class AudioManager : MonoBehaviour
             int length = allSources.Length;
             for (int i = 0; i < length; i++)
             {
-                allSources[i].transform.GetChild(i).gameObject.SetActive(true);
+                allSources[i].gameObject.SetActive(true);
                 currentGameSource.Play();
             }
         }

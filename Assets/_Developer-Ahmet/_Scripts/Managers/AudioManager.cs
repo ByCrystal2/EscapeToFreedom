@@ -137,7 +137,7 @@ public class AudioManager : MonoBehaviour
             switch (_soundType)
             {
                 case PersonnelSoundType.ISeeYou:
-                    if (PersonnelSource.isPlaying) return;
+                    if (!PersonnelSource.isPlaying)
                     PersonnelSource.PlayOneShot(ISeeYouSound);
                     break;
                 case PersonnelSoundType.Death:

@@ -252,7 +252,7 @@ public class PuzzleManager : MonoBehaviour
     {
         CurrentPuzzleOwningPersonel = _personnel;
         CurrentPuzzle = _personnel.Puzzle;
-        MissionsManager.instance.ActivationDesiredPuzzleMission(GameManager.instance.currentFloorManager.GetFloor()-1,_personnel.Puzzle.ID);
+        MissionsManager.instance.ActivationDesiredPuzzleMission((int)(GameManager.instance.currentFloorManager.GetFloor())-1,_personnel.Puzzle.ID);
     }
     public void SetCurrentMainStoryMission(GameMission _mission)
     {
